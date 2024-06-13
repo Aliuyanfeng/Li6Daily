@@ -4,6 +4,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "Li6Daily",
   description: "Everything about Xiao Liu",
+  base:'/Li6Daily/',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
