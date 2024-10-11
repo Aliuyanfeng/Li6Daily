@@ -14,7 +14,29 @@ export default {
             ],
           },
           { text: "操作系统", link: "/guide/one" },
-          { text: "常用命令", link: "/guide/two" },
+          { text: "常用命令", link: "/Linux/基础知识" },
+          {
+            text: "文件传输协议",
+            collapsed: true,
+            items: [
+              {
+                text: "FTP",
+                link: "/Linux/文件传输协议/ftp",
+              },
+              {
+                text: "SFTP",
+                link: "/Linux/文件传输协议/sftp",
+              },
+              {
+                text: "S3",
+                link: "/Linux/文件传输协议/s3",
+              },
+              {
+                text: "SMB",
+                link: "/Linux/文件传输协议/smb",
+              },
+            ],
+          },
         ],
       },
     ],
@@ -30,6 +52,10 @@ export default {
       {
         text: "性能分析pprof",
         link: "/Golang/pprof.md"
+      },
+      {
+        text: "内存管理",
+        link: "/Golang/内存管理.md"
       },
     ],
     "/Python/": [

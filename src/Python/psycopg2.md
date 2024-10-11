@@ -1,7 +1,7 @@
 # psycog2
 当前操作系统 red-hat系   国产浪潮NF218M3 银河麒麟v10操作系统  
 未安装情况下报错提示：
-![alt text](image.png)
+![报错信息](./images/image.png)
 安装python依赖包psycopg之前，你必须需要先安装postgresql数据库的相关组件：  
 `postgresql-devel`  
 `postgresql`  
