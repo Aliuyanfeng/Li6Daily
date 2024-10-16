@@ -1,1 +1,0 @@
-import{_ as t,c as e,o as a}from"./chunks/framework.CjTfVxLl.js";const d=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"Linux/文件传输协议/ftp.md","filePath":"Linux/文件传输协议/ftp.md"}'),n={name:"Linux/文件传输协议/ftp.md"};function r(o,s,c,p,i,f){return a(),e("div")}const m=t(n,[["render",r]]);export{d as __pageData,m as default};
