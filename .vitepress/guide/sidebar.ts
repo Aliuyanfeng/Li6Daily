@@ -68,6 +68,10 @@ export default {
       {
         text: "Supervisor",
         link: "/Other/Supervisor.md"
+      },
+      {
+        text: "PostgreSQL",
+        link: "/Other/PostgreSQL.md"
       }
     ]
   }

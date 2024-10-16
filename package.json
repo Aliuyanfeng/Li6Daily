@@ -5,6 +5,10 @@
     "docs:preview": "vitepress preview --host"
   },
   "devDependencies": {
+    "sass": "^1.79.5",
     "vitepress": "^1.2.3"
+  },
+  "dependencies": {
+    "vitepress-markdown-timeline": "^1.2.1"
   }
 }

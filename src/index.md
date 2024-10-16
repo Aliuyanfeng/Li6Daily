@@ -4,15 +4,15 @@ layout: home
 
 hero:
   name: "Li6Daily"
-  text: "小刘的废话日记👻"
+  text: "In the Coding...👻"
   tagline: 像珍惜礼物那样珍惜今天
   actions:
-    - theme: brand
-      text: 开始学习！！！
-      link: /markdown-examples
+    # - theme: brand
+    #   text: 开始学习！！！
+    #   link: /markdown-examples
     - theme: alt
       text: 导航概览
-      link: /api-examples
+      link: /TimeLine/index
 
 features:
   - icon: 🛠️
@@ -25,14 +25,3 @@ features:
     title: Feature C
     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
 ---
-
-
-
-## Getting Started
-
-You can get started using VitePress right away using `npx`!
-
-```sh
-npm init
-npx vitepress init
-```
