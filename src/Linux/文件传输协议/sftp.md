@@ -307,4 +307,29 @@ ChrootDirectory  %h
 
 ## Windows搭建sftp服务器
 
+### 基于freesshd(存在中文乱码问题)
+
 参考：https://www.jb51.net/softjc/912161.html
+
+### 基于OpenSSH搭建SFTP服务器
+
+1. 下载OpenSSH  
+[Github下载地址](https://github.com/PowerShell/Win32-OpenSSH/releases)
+2. 安装OpenSSH  
+   直接下载msi版本，点击安装即可
+3. 配置和启动服务  
+   - `Win+R`键打开运行命令窗口，输入`Services.msc`  
+   ![alt text](image-5.png)
+   - 将图中的服务启动并修改启动类型为自动
+   ![alt text](./images/image-6.png)
+4. 配置防火墙策略
+   - 打开控制面板-控制面板\系统和安全\Windows Defender 防火墙，点击高级设置，右键新建入站规则，选择端口，下一页  
+   ![alt text](image-3.png)
+   - 选择特定端口，输入22，下一页   
+   ![alt text](image-4.png)
+   - 选择允许连接，下一页     
+   ![alt text](image-6.png)
+   - 根据需求选取配置文件，下一页      
+   ![alt text](image-7.png)
+   - 输入名称，完成即可  
+   ![alt text](image-8.png)
