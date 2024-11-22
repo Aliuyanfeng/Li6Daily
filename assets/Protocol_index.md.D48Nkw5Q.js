@@ -1,0 +1,1 @@
+import{_ as e,c as t,o}from"./chunks/framework.CjTfVxLl.js";const _=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"Protocol/index.md","filePath":"Protocol/index.md","lastUpdated":1732241785000}'),a={name:"Protocol/index.md"};function r(n,c,s,d,i,p){return o(),t("div")}const m=e(a,[["render",r]]);export{_ as __pageData,m as default};
