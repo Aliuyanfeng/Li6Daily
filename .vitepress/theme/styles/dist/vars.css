@@ -1,0 +1,34 @@
+@charset "UTF-8";
+:root {
+  --vp-c-brand: #333333;
+}
+
+#app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  /* 防止 ::before 元素超出边界 */
+}
+#app .Layout #VPContent .VPHero .main * {
+  margin: 0 auto;
+}
+
+#app::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  filter: blur(5px);
+  -webkit-filter: blur(8px);
+  /* Safari 浏览器兼容 */
+  z-index: -1;
+  /* 将模糊背景置于内容后面 */
+}

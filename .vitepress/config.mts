@@ -32,7 +32,7 @@ export default defineConfig({
     },
     nav: nav,
     sidebar: sidebar,
-    socialLinks: [{ icon: "github", link: "https://github.com/Aliuyanfeng" }],
+    // socialLinks: [{ icon: "github", link: "https://github.com/Aliuyanfeng" }],
     footer: {
       message: 'Released under the MIT License.',
       copyright: 'Copyright © 2024-PowerBy Aliu'

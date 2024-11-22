@@ -3,9 +3,9 @@
 layout: home
 
 hero:
-  name: "Li6Daily"
+  name: "Li6Daily 知识库"
   text: "In the Coding...👻"
-  tagline: 像珍惜礼物那样珍惜今天
+  tagline: 不积跬步，无以至千里；不积小流，无以成江海。——《荀子·劝学》
   actions:
     # - theme: brand
     #   text: 开始学习！！！
@@ -13,7 +13,6 @@ hero:
     - theme: alt
       text: 导航概览
       link: /TimeLine/index
-
 features:
   - icon: 🍉
     title: Feature A

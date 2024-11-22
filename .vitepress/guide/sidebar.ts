@@ -11,29 +11,38 @@ export default {
                 text: "TCP/IP",
                 link: "/Linux/计算机网络/TCP-IP",
               },
+              {
+                text: "网卡配置",
+                link: "/Linux/计算机网络/网卡配置",
+              },
             ],
           },
-          { text: "操作系统", link: "/guide/one" },
+          { text: "操作系统", link: "/Linux/操作系统" },
           { text: "常用命令", link: "/Linux/基础知识" },
+          { text: "htop命令详解", link: "/Linux/htop" },
           {
-            text: "文件传输协议",
+            text: "性能优化实战",
             collapsed: true,
             items: [
               {
-                text: "FTP",
-                link: "/Linux/文件传输协议/ftp",
+                text: "优化路线",
+                link: "/Linux/性能优化实战/优化路线",
               },
               {
-                text: "SFTP",
-                link: "/Linux/文件传输协议/sftp",
+                text: "CPU性能",
+                link: "/Linux/性能优化实战/CPU性能",
               },
               {
-                text: "S3",
-                link: "/Linux/文件传输协议/s3",
+                text: "内存性能",
+                link: "/Linux/性能优化实战/内存性能",
               },
               {
-                text: "SMB",
-                link: "/Linux/文件传输协议/smb",
+                text: "网络性能",
+                link: "/Linux/性能优化实战/网络性能",
+              },
+              {
+                text: "综合实战",
+                link: "/Linux/性能优化实战/综合实战",
               },
             ],
           },
@@ -63,6 +72,34 @@ export default {
         text: "psycopg2",
         link: "/Python/psycopg2.md"
       },
+      {
+        text: "wkhtmltopdf进行PDF的生成",
+        link: "/Python/htmltopdf.md"
+      },
+    ],
+    "/Protocol": [
+      {
+        text: "文件传输协议",
+        collapsed: true,
+        items: [
+          {
+            text: "FTP",
+            link: "/Linux/文件传输协议/ftp",
+          },
+          {
+            text: "SFTP",
+            link: "/Linux/文件传输协议/sftp",
+          },
+          {
+            text: "S3",
+            link: "/Linux/文件传输协议/s3",
+          },
+          {
+            text: "SMB",
+            link: "/Linux/文件传输协议/smb",
+          },
+        ],
+      },
     ],
     "/Other/": [
       {
@@ -72,6 +109,22 @@ export default {
       {
         text: "PostgreSQL",
         link: "/Other/PostgreSQL.md"
+      },
+      {
+        text: "SQL病毒注入与清除",
+        link: "/Other/SQL病毒注入与清除.md"
+      },
+      {
+        text: "bcc-tools安装",
+        link: "/Other/bcc-tools安装.md"
+      },
+      {
+        text: "nload安装",
+        link: "/Other/nload安装.md"
+      },
+      {
+        text: "网卡速率脚本",
+        link: "/Other/speed.md"
       }
     ]
   }
