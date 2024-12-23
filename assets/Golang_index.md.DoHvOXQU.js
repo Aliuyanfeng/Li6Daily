@@ -1,1 +1,0 @@
-import{_ as e,c as t,o as a}from"./chunks/framework.BhrxS_qF.js";const _=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"Golang/index.md","filePath":"Golang/index.md","lastUpdated":1726047135000}'),n={name:"Golang/index.md"};function o(r,s,d,c,i,p){return a(),t("div")}const m=e(n,[["render",o]]);export{_ as __pageData,m as default};
