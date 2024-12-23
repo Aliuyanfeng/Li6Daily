@@ -7,6 +7,7 @@ export default defineConfig({
   title: "Li6Daily",
   titleTemplate: "Live and learn",
   description: "Everything about Xiao Liu",
+  appearance: false,
   head: [
     ["link", { rel: "icon", href: "/Li6Daily/favicon.ico" }],
     ["link", { rel: "preconnect", href: "https://fonts.googleapis.com" }],
@@ -22,7 +23,7 @@ export default defineConfig({
       },
     ],
   ],
-  base: "/Li6Daily/",
+  base: "/AL",
   srcDir: "./src",
   lastUpdated: true,
   themeConfig: {
