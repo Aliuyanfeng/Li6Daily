@@ -23,7 +23,7 @@ export default defineConfig({
       },
     ],
   ],
-  base: "/",
+  base: "/Li6Daily",
   srcDir: "./src",
   lastUpdated: true,
   themeConfig: {
