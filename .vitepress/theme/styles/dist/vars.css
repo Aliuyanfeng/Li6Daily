@@ -21,11 +21,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("../images/bg.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  background: radial-gradient(500px at 50% 50%, #f7eaa3 0%, rgba(236, 180, 238, 0.56) 46.4%, #a3cbf7 100.7%);
   filter: blur(5px);
   -webkit-filter: blur(8px);
   /* Safari 浏览器兼容 */
