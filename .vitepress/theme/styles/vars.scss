@@ -1,25 +1,106 @@
 :root {
-    //...
-    --vp-c-brand: #333333; // 修改vitepress提供的主题颜色变量即可
+  //...
+  --vp-c-brand: #333333; // 修改vitepress提供的主题颜色变量即可
+}
+
+::-webkit-scrollbar-track-piece {
+  //滚动条凹槽的颜色，还可以设置边框属性
+  background-color: #f8f8f8;
+}
+
+::-webkit-scrollbar {
+  //滚动条的宽度
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-thumb {
+  //滚动条的设置
+  background-color: #bbb;
+  background-clip: padding-box;
+  min-height: 28px;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #86909c;
 }
 
 #app {
   position: relative;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden; /* 防止 ::before 元素超出边界 */
+  width: 100%;
+  height: 100%;
+
   .Layout {
+
+    .VPNav {
+      transition: none;
+
+      .VPNavBar {
+        .container {
+          .VPNavBarTitle {
+            .title {
+              border: none;
+            }
+          }
+
+          .content {
+            .content-body {
+              background: none;
+            }
+          }
+        }
+
+      }
+    }
+
+    .VPSidebar {
+      background: none;
+
+      .curtain {
+        background: none;
+      }
+    }
+
     #VPContent {
       .VPHero {
         .main {
           * {
             margin: 0 auto;
           }
+
+          .tagline {
+            max-width: 100%;
+            text-align: center;
+          }
+        }
+      }
+
+      .VPDoc {
+        .container {
+          .aside {
+            .aside-curtain {
+              background: none;
+            }
+
+            .aside-container {
+              .aside-content {
+                .VPDocAside {
+                  .VPDocAsideOutline {
+                    .content {
+                      border: none;
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
   }
 }
+
 #app::before {
   content: "";
   position: absolute;
@@ -30,8 +111,11 @@
   // background: radial-gradient(circle at 50% 50%, rgb(239, 246, 249) 0%, rgb(206, 239, 253) 90%);
   background: radial-gradient(500px at 50% 50%, rgb(247, 234, 163) 0%, rgba(236, 180, 238, 0.56) 46.4%, rgb(163, 203, 247) 100.7%);
   // background-image: radial-gradient(circle at 48.7% 44.3%, rgb(30, 144, 231) 0%, rgb(56, 113, 209) 22.9%, rgb(38, 76, 140) 76.7%, rgb(31, 63, 116) 100.2%);
+  background-repeat: repeat-y;
+  background-size: 100% auto;
   filter: blur(5px);
-  -webkit-filter: blur(8px); /* Safari 浏览器兼容 */
-  z-index: -1; /* 将模糊背景置于内容后面 */
+  -webkit-filter: blur(8px);
+  /* Safari 浏览器兼容 */
+  z-index: -1;
+  /* 将模糊背景置于内容后面 */
 }
-  

@@ -23,7 +23,7 @@ export default defineConfig({
       },
     ],
   ],
-  base: "/AL",
+  base: "/al",
   srcDir: "./src",
   lastUpdated: true,
   themeConfig: {
