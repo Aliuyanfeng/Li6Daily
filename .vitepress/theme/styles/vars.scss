@@ -37,6 +37,13 @@
       transition: none;
 
       .VPNavBar {
+        .divider {
+          .divider-line {
+            height: initial;
+            width: initial;
+            transition: none;
+          }
+        }
         .container {
           .VPNavBarTitle {
             .title {
@@ -111,7 +118,7 @@
   // background: radial-gradient(circle at 50% 50%, rgb(239, 246, 249) 0%, rgb(206, 239, 253) 90%);
   background: radial-gradient(500px at 50% 50%, rgb(247, 234, 163) 0%, rgba(236, 180, 238, 0.56) 46.4%, rgb(163, 203, 247) 100.7%);
   // background-image: radial-gradient(circle at 48.7% 44.3%, rgb(30, 144, 231) 0%, rgb(56, 113, 209) 22.9%, rgb(38, 76, 140) 76.7%, rgb(31, 63, 116) 100.2%);
-  background-repeat: repeat-y;
+  background-repeat: repeat;
   background-size: 100% auto;
   filter: blur(5px);
   -webkit-filter: blur(8px);

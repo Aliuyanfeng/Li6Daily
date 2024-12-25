@@ -31,6 +31,11 @@
 #app .Layout .VPNav {
   transition: none;
 }
+#app .Layout .VPNav .VPNavBar .divider .divider-line {
+  height: initial;
+  width: initial;
+  transition: none;
+}
 #app .Layout .VPNav .VPNavBar .container .VPNavBarTitle .title {
   border: none;
 }
@@ -65,7 +70,7 @@
   width: 100%;
   height: 100%;
   background: radial-gradient(500px at 50% 50%, #f7eaa3 0%, rgba(236, 180, 238, 0.56) 46.4%, #a3cbf7 100.7%);
-  background-repeat: repeat-y;
+  background-repeat: repeat;
   background-size: 100% auto;
   filter: blur(5px);
   -webkit-filter: blur(8px);
