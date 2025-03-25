@@ -37,6 +37,7 @@ jobs:
         run: |
           git config --global user.name "Aliuyanfeng"
           git config --global user.email "1773189480@qq.com"
+          git config pull.rebase true
 
       - name: Push to GitLab
         run: |
