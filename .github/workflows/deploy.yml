@@ -42,5 +42,5 @@ jobs:
       - name: Push to GitLab
         run: |
           git remote add gitlab http://${{ secrets.GITLAB_USERNAME }}:${{ secrets.GITLAB_TOKEN }}@gitlab.com/Aliuyanfeng/li6daliy.git
-          git pull gitlab main
-          git push gitlab main
+          git pull gitlab/main --allow-unrelated-histories
+          git push gitlab/main
