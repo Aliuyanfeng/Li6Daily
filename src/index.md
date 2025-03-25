@@ -3,7 +3,7 @@
 layout: home
 
 hero:
-  name: "Li6Daily 知识库"
+  name: "Li6Daily 个人知识库"
   text: "In the Coding...👻"
   tagline: 不积跬步，无以至千里；不积小流，无以成江海。——《荀子·劝学》
   actions:
