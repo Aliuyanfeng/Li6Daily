@@ -27,19 +27,19 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: .vitepress/dist
           # cname: example.com # if wanna deploy to custom domain
-  mirror:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  # mirror:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
 
-      - name: Configure Git
-        run: |
-          git config --global user.name "Aliuyanfeng"
-          git config --global user.email "1773189480@qq.com"
-          git config pull.rebase false
+  #     - name: Configure Git
+  #       run: |
+  #         git config --global user.name "Aliuyanfeng"
+  #         git config --global user.email "1773189480@qq.com"
+         
 
-      - name: Push to GitLab
-        run: |
-          git remote add gitlab https://${{ secrets.GITLAB_USERNAME }}:${{ secrets.GITLAB_TOKEN }}@gitlab.com/Aliuyanfeng/li6daliy.git
-          git push -f gitlab main
+  #     - name: Push to GitLab
+  #       run: |
+  #         git remote add gitlab https://${{ secrets.GITLAB_USERNAME }}:${{ secrets.GITLAB_TOKEN }}@gitlab.com/Aliuyanfeng/li6daliy.git
+  #         git push -f gitlab main

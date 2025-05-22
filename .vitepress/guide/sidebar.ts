@@ -66,6 +66,10 @@ export default {
         text: "内存管理",
         link: "/Golang/内存管理.md"
       },
+      {
+        text: "缓存命中分析pcstat",
+        link: "/Golang/pcstat.md"
+      },
     ],
     "/Python/": [
       {
@@ -125,6 +129,10 @@ export default {
       {
         text: "网卡速率脚本",
         link: "/Other/speed.md"
+      },
+            {
+        text: "ffmpeg离线安装",
+        link: "/Other/ffmpeg离线安装.md"
       }
     ]
   }
