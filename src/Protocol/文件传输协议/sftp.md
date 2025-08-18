@@ -24,15 +24,43 @@ passwd sftpuser
 ```
 4. 创建用户的主目录  
 上述操作`useradd` 会默认创建用户的主目录`/home/sftpuser`  
-根据需要自行调整数据存放目录
-```shell
-```
 
+5. 配置Chroot目录权限
+```shell
+chown root:root /home/sftpuser
+chmod 755 /home/sftpuser
+```
+6. 配置用户目录权限
+
+```shell
+# 使用root权限给用户配置一个主目录
+cd /home/sftpuser
+mkdir sample
+# 此时sample目录归属于root 要转移属主为sftpuser, 如果创建多个目录就要重复执行多次
+chown sftpuser:sftp sample/
+chmod 755 sample/
+# 后续如果在sample目录下创建子目录 同样要将目录属主和权限检查设置一遍
+```
 ### sshd配置
 #### sshd建议设置参数
 
-Match Group sftp,sftpvisitor
-ChrootDirectory %h
+在原有的sshd.config上 修改增加以下参数
+
+该方式为对所有组下所有用户生效 不必没单独设置用户
+```shell
+# 启用内部SFTP
+Subsystem sftp internal-sftp
+
+# 匹配用户组（推荐）
+Match Group sftp
+    ChrootDirectory %h          # %h代表用户主目录
+    ForceCommand internal-sftp   # 强制使用SFTP协议
+    X11Forwarding no             # 禁用X11转发
+    AllowTcpForwarding no        # 禁用TCP转发
+    PermitTunnel no
+
+```
+该方式为对单独用户设置，和上述group 二选一即可
 
 ```shell
 Subsystem sftp internal-sftp  #指定使用sftp服务使用系统自带的internal-sftp

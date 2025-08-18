@@ -61,3 +61,37 @@ vim /etc/ld.so.conf
 `/usr/local/ffmpeg/lib`  
 `usr/local/ffmpeg `目录是ffmpeg的安装目录，根据个人不同安装目录修改。  
 更新环境变量：`sudo ldconfig`
+
+## 6 相关依赖安装
+
+### 6.1 libmp3lame
+$ wget http://downloads.sourceforge.net/project/lame/lame/3.99/lame-3.99.5.tar.gz
+$ tar -xzf lame-3.99.5.tar.gz
+$ cd lame-3.99.5
+$ ./configure --enable-static --enable-shared
+$ make
+$ sudo make install
+
+
+./configure可能报错 error: cannot guess build type; you must specify one
+需要指定参数构建架构
+./configure --build=arm-linux
+
+
+### 6.2 libx264
+
+
+#下载并安装x264
+git clone https://code.videolan.org/videolan/x264.git
+cd x264
+mkdir build
+ 
+./configure --help
+#### 报缺少asm 时 可加入--disable-asm
+#### --prefix=/home/llh/ffmpeg/build/ 指定安装目录
+./configure --prefix=/root/FFmpeg7/x264/build --enable-shared --enable-static --disable-asm
+ 
+make
+ 
+#### x264将会安装到 ：/root/FFmpeg7/x264/build 目录下
+make install
