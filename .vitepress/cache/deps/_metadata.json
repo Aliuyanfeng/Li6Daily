@@ -1,49 +1,55 @@
 {
-  "hash": "d73d3559",
+  "hash": "10478bac",
   "configHash": "2dcae11d",
-  "lockfileHash": "9b37548a",
-  "browserHash": "a081b40b",
+  "lockfileHash": "e80020ed",
+  "browserHash": "ca20a93f",
   "optimized": {
     "vue": {
       "src": "../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "1933e0d9",
+      "fileHash": "8902c08e",
       "needsInterop": false
     },
     "vitepress > @vue/devtools-api": {
       "src": "../../../node_modules/@vue/devtools-api/dist/index.js",
       "file": "vitepress___@vue_devtools-api.js",
-      "fileHash": "dfea521a",
+      "fileHash": "b9ab40a6",
       "needsInterop": false
     },
     "vitepress > @vueuse/core": {
       "src": "../../../node_modules/@vueuse/core/index.mjs",
       "file": "vitepress___@vueuse_core.js",
-      "fileHash": "5263c131",
+      "fileHash": "8736996b",
       "needsInterop": false
     },
     "vitepress > @vueuse/integrations/useFocusTrap": {
       "src": "../../../node_modules/@vueuse/integrations/useFocusTrap.mjs",
       "file": "vitepress___@vueuse_integrations_useFocusTrap.js",
-      "fileHash": "d30d6f9a",
+      "fileHash": "f1e57ea9",
       "needsInterop": false
     },
     "vitepress > mark.js/src/vanilla.js": {
       "src": "../../../node_modules/mark.js/src/vanilla.js",
       "file": "vitepress___mark__js_src_vanilla__js.js",
-      "fileHash": "099d870c",
+      "fileHash": "4afb373e",
       "needsInterop": false
     },
     "vitepress > minisearch": {
       "src": "../../../node_modules/minisearch/dist/es/index.js",
       "file": "vitepress___minisearch.js",
-      "fileHash": "0e1cbc50",
+      "fileHash": "c7a388f5",
       "needsInterop": false
     },
     "vitepress-theme-teek": {
       "src": "../../../node_modules/vitepress-theme-teek/es/index.mjs",
       "file": "vitepress-theme-teek.js",
-      "fileHash": "1c38c9a8",
+      "fileHash": "c7b6d96d",
+      "needsInterop": false
+    },
+    "echarts": {
+      "src": "../../../node_modules/echarts/index.js",
+      "file": "echarts.js",
+      "fileHash": "2d364f4d",
       "needsInterop": false
     }
   },

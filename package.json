@@ -6,6 +6,7 @@
   },
   "devDependencies": {
     "@types/node": "^24.10.0",
+    "echarts": "^6.0.0",
     "sass": "^1.79.5",
     "vitepress": "^1.2.3",
     "vitepress-theme-teek": "^1.5.2"
