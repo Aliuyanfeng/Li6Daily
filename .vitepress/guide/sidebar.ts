@@ -81,26 +81,26 @@ export default {
         link: "/Python/htmltopdf.md"
       },
     ],
-    "/Protocol": [
+    "/Protocol/": [
       {
         text: "文件传输协议",
-        collapsed: true,
+        collapsed: false,
         items: [
           {
             text: "FTP",
-            link: "/Linux/Protocol/文件传输协议/ftp.md",
+            link: "/Protocol/文件传输协议/ftp.md",
           },
           {
             text: "SFTP",
-            link: "/Linux/Protocol/文件传输协议/sftp.md",
+            link: "/Protocol/文件传输协议/sftp.md",
           },
           {
             text: "S3",
-            link: "/Linux/Protocol/文件传输协议/s3.md",
+            link: "/Protocol/文件传输协议/s3.md",
           },
           {
             text: "SMB",
-            link: "/Linux/Protocol/文件传输协议/smb.md",
+            link: "/Protocol/文件传输协议/smb.md",
           },
         ],
       },
