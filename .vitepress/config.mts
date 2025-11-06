@@ -2,6 +2,9 @@ import { defineConfig } from "vitepress";
 import nav from "./guide/nav"
 import sidebar from "./guide/sidebar";
 import timeline from "vitepress-markdown-timeline";
+import process from 'node:process';
+
+const isProd = process.env.DEPLOY_PLATFORM === 'github'
 
 export default defineConfig({
   title: "Li6Daily",
@@ -23,9 +26,9 @@ export default defineConfig({
       },
     ],
   ],
-  base: "/Li6Daily",
+  base: isProd ? '/Li6Daily/' : '/',  // GitHub 用子目录，Cloudflare 用根路径
   srcDir: "./src",
-  outDir: "./public",
+  outDir: ".vitepress/dist",
   lastUpdated: true,
   themeConfig: {
     siteTitle: "Li6Daily",

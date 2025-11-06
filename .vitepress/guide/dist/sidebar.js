@@ -90,19 +90,19 @@ exports["default"] = {
             items: [
                 {
                     text: "FTP",
-                    link: "/Linux/文件传输协议/ftp"
+                    link: "/Linux/Protocol/文件传输协议/ftp.md"
                 },
                 {
                     text: "SFTP",
-                    link: "/Linux/文件传输协议/sftp"
+                    link: "/Linux/Protocol/文件传输协议/sftp.md"
                 },
                 {
                     text: "S3",
-                    link: "/Linux/文件传输协议/s3"
+                    link: "/Linux/Protocol/文件传输协议/s3.md"
                 },
                 {
                     text: "SMB",
-                    link: "/Linux/文件传输协议/smb"
+                    link: "/Linux/Protocol/文件传输协议/smb.md"
                 },
             ]
         },

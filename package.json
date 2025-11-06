@@ -5,6 +5,7 @@
     "docs:preview": "vitepress preview --host"
   },
   "devDependencies": {
+    "@types/node": "^24.10.0",
     "sass": "^1.79.5",
     "vitepress": "^1.2.3"
   },

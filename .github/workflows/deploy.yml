@@ -1,6 +1,9 @@
 # 构建 VitePress 站点并将其部署到 GitHub Pages 
 name: Deploy VitePress site to Pages
 
+env:
+  DEPLOY_PLATFORM: 'github'
+
 on:
   push:
     branches:
@@ -26,7 +29,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public/dist
+          publish_dir: .vitepress/dist
           # cname: example.com # if wanna deploy to custom domain
   # mirror:
   #   runs-on: ubuntu-latest
