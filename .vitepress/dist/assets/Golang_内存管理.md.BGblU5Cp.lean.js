@@ -1,1 +1,0 @@
-import{_ as a,c as e,o as l,a3 as t}from"./chunks/framework.CjTfVxLl.js";const b=JSON.parse('{"title":"内存管理","description":"","frontmatter":{},"headers":[],"relativePath":"Golang/内存管理.md","filePath":"Golang/内存管理.md"}'),o={name:"Golang/内存管理.md"},i=t("",11),r=[i];function c(n,h,s,d,_,u){return l(),e("div",null,r)}const k=a(o,[["render",c]]);export{b as __pageData,k as default};

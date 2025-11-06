@@ -24,6 +24,7 @@ passwd sftpuser
 ```
 4. 创建用户的主目录  
 上述操作`useradd` 会默认创建用户的主目录`/home/sftpuser`  
+Tips: 如果想删除用户的话 使用命令 userdel -r sftpuser
 
 5. 配置Chroot目录权限
 ```shell
@@ -44,9 +45,9 @@ chmod 755 sample/
 ### sshd配置
 #### sshd建议设置参数
 
-在原有的sshd.config上 修改增加以下参数
+在原有的sshd.config上 **最后一行之后**， 一定要最后一行，否则会导致sshd启动失败，增加以下参数，如果配置文件存在相关的配置存在先把相关的注释掉或删除掉
 
-该方式为对所有组下所有用户生效 不必没单独设置用户
+该方式为对所有组下所有用户生效
 ```shell
 # 启用内部SFTP
 Subsystem sftp internal-sftp
@@ -58,7 +59,6 @@ Match Group sftp
     X11Forwarding no             # 禁用X11转发
     AllowTcpForwarding no        # 禁用TCP转发
     PermitTunnel no
-
 ```
 该方式为对单独用户设置，和上述group 二选一即可
 
