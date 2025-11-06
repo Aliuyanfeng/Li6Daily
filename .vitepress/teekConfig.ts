@@ -15,7 +15,7 @@ export const teekConfig = defineTeekConfig({
     name: "📝 啥都写的知识仓库",
     descStyle: 'types',
     bgStyle: 'fullImg',
-    imgSrc: './images/bg.jpg',
+    imgSrc: '/images/bg.jpg',
     mask: true,
   },
   wallpaper: {
