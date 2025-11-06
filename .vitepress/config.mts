@@ -25,6 +25,7 @@ export default defineConfig({
   ],
   base: "/Li6Daily",
   srcDir: "./src",
+  outDir: "./public",
   lastUpdated: true,
   themeConfig: {
     siteTitle: "Li6Daily",
