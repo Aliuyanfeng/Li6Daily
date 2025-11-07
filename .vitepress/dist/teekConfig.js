@@ -61,5 +61,37 @@ exports.teekConfig = config_1.defineTeekConfig({
                 id: "baefad2ec086c7f7ddb868440ed0a558"
             }
         },
-    ]
+    ],
+    // 页脚配置
+    footerInfo: {
+        // 页脚信息，支持 HTML 格式（位于主题版权上方）
+        topMessage: [""],
+        // 页脚信息，支持 HTML 格式（位于主题版权下方）
+        bottomMessage: ["Released under the MIT License."],
+        // 主题版权配置
+        theme: {
+            show: false,
+            name: "",
+            link: ""
+        },
+        // 博客版权配置
+        copyright: {
+            show: true,
+            createYear: 2024,
+            suffix: "PowerBy Aliu"
+        },
+        // ICP 备案信息配置
+        icpRecord: {
+            name: "暂未备案",
+            link: "http://beian.miit.gov.cn/"
+        },
+        // 网络安全备案信息配置
+        securityRecord: {
+            name: "暂未备案",
+            link: ""
+        }
+    },
+    docAnalysis: {
+        overrideInfo: [{ key: "totalPosts", label: "文章总数目" }]
+    }
 });
