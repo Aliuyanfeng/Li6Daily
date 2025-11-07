@@ -1,3 +1,10 @@
+---
+date: 2024-09-11 17:11:05
+title: psycopg2
+permalink: /pages/eeb9b8
+categories:
+  - Python
+---
 # psycog2
 当前操作系统 red-hat系   国产浪潮NF218M3 银河麒麟v10操作系统  
 未安装情况下报错提示：

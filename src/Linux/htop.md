@@ -1,3 +1,10 @@
+---
+date: 2024-10-31 15:42:43
+title: htop
+permalink: /pages/eff472
+categories:
+  - Linux
+---
 # htop命令详解
 htop是一个交互式的进程查看工具，用于‌Linux系统。它提供了比传统top命令更丰富和直观的界面，支持彩色标记和条形图展示进程信息，包括‌CPU、‌内存、‌交换空间的使用情况。htop允许用户通过键盘和鼠标操作来管理进程，如‌排序、标记和终止进程等,通过分析各种实际数据排查潜在的问题。
 ![alt text](./images/htop-1.png)

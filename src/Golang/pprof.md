@@ -1,3 +1,10 @@
+---
+date: 2024-09-04 23:15:19
+title: pprof
+permalink: /pages/195a6f
+categories:
+  - Golang
+---
 # 性能分析工具-pprof
 
 ## 使用方式

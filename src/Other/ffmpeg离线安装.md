@@ -1,3 +1,10 @@
+---
+date: 2025-03-26 11:31:07
+title: ffmpeg离线安装
+permalink: /pages/368cf8
+categories:
+  - Other
+---
 # 离线安装FFMPEG
 
 

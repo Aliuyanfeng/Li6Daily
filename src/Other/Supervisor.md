@@ -1,3 +1,10 @@
+---
+date: 2024-09-11 17:18:52
+title: Supervisor
+permalink: /pages/68a6b5
+categories:
+  - Other
+---
 # Supervisor
 ## 在线安装
 1. 执行安装命令  

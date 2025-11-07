@@ -2,6 +2,9 @@ import { defineTeekConfig } from "vitepress-theme-teek/config";
 
 // Teek 主题配置
 export const teekConfig = defineTeekConfig({
+  vitePlugins: {
+    autoFrontmatter: true,
+  },
   teekTheme: true,
   teekHome: true,
   pageStyle: 'segment-nav',
@@ -32,7 +35,7 @@ export const teekConfig = defineTeekConfig({
     moreLabel: "阅读全文 >", // 更多按钮文字
     emptyLabel: "暂无文章", // 文章列表为空时的标签
     coverImgMode: "default", // 文章封面图模式
-    showCapture: false, // 是否在摘要位置显示文章部分文字，当为 true 且不使用 frontmatter.describe 和 <!-- more --> 时，会自动截取前 300 个字符作为摘要
+    showCapture: true, // 是否在摘要位置显示文章部分文字，当为 true 且不使用 frontmatter.describe 和 <!-- more --> 时，会自动截取前 300 个字符作为摘要
     splitSeparator: false, // 文章信息（作者、创建时间、分类、标签等信息）是否添加 | 分隔符
     transition: true, // 是否开启过渡动画
     transitionName: "tk-slide-fade", // 自定义过渡动画名称
@@ -49,4 +52,12 @@ export const teekConfig = defineTeekConfig({
     background: false, // 是否为分页按钮添加背景色
     hideOnSinglePage: false, // 只有一页时是否隐藏
   },
+  siteAnalytics: [
+    {
+      provider: "baidu",
+      options: {
+        id: "baefad2ec086c7f7ddb868440ed0a558",
+      },
+    },
+  ],
 });

@@ -1,3 +1,11 @@
+---
+date: 2025-04-16 16:51:34
+title: index
+permalink: /pages/ca266f
+categories:
+  - Format
+  - BMP
+---
 <!--
  * @Author: LiuYanFeng
  * @Date: 2025-04-16 16:51:34

@@ -1,3 +1,10 @@
+---
+date: 2024-10-16 23:00:54
+title: PostgreSQL
+permalink: /pages/ec138b
+categories:
+  - Other
+---
 # PostgreSQL
 ## 常用命令
 

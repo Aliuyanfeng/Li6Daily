@@ -1,3 +1,10 @@
+---
+date: 2024-11-03 16:10:42
+title: bcc-tools安装
+permalink: /pages/08e4a9
+categories:
+  - Other
+---
 # 安装bcc-tools
 ## ⚠️Tips
 bcc-tools 需要内核版本为 4.1 或者更新的版本, 内核版本查看`uname -r`

@@ -1,3 +1,10 @@
+---
+date: 2024-11-14 11:41:24
+title: speed
+permalink: /pages/54f3ac
+categories:
+  - Other
+---
 # speed.sh
 
 

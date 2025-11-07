@@ -1,3 +1,10 @@
+---
+date: 2024-09-03 11:38:49
+title: Package管理
+permalink: /pages/2f3b30
+categories:
+  - Golang
+---
 # Go Package
 
 ## 迁移、备份包到其他环境

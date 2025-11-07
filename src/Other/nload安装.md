@@ -1,3 +1,10 @@
+---
+date: 2024-11-14 11:22:44
+title: nload安装
+permalink: /pages/bd9d10
+categories:
+  - Other
+---
 # nload安装
 
 nload 是一个实时监控网络流量和带宽使用情况的命令行工具。

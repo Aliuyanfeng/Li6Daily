@@ -1,3 +1,11 @@
+---
+date: 2024-11-02 11:37:34
+title: CPU性能
+permalink: /pages/7fc61e
+categories:
+  - Linux
+  - 性能优化实战
+---
 # CPU性能
 
 ## 平均负载

@@ -1,7 +1,13 @@
 ---
+date: 2024-08-30 15:10:02
+title: TCP-IP
 outline: deep
 lastUpdated: true
 footer: true
+permalink: /pages/b6be62
+categories:
+  - Linux
+  - 计算机网络
 ---
 
 # TCP/IP四层模型介绍

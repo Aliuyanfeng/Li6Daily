@@ -1,3 +1,11 @@
+---
+date: 2024-09-20 10:01:54
+title: sftp
+permalink: /pages/55a396
+categories:
+  - Protocol
+  - 文件传输协议
+---
 # SFTP协议相关
 ## Linux搭建sftp服务器
 1. 在Linux上搭建SFTP服务器，可以使用openssh软件包中的sshd守护进程来实现  

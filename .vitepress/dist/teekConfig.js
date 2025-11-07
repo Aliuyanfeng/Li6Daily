@@ -4,6 +4,9 @@ exports.teekConfig = void 0;
 var config_1 = require("vitepress-theme-teek/config");
 // Teek 主题配置
 exports.teekConfig = config_1.defineTeekConfig({
+    vitePlugins: {
+        autoFrontmatter: true
+    },
     teekTheme: true,
     teekHome: true,
     pageStyle: 'segment-nav',
@@ -34,7 +37,7 @@ exports.teekConfig = config_1.defineTeekConfig({
         moreLabel: "阅读全文 >",
         emptyLabel: "暂无文章",
         coverImgMode: "default",
-        showCapture: false,
+        showCapture: true,
         splitSeparator: false,
         transition: true,
         transitionName: "tk-slide-fade",
@@ -50,5 +53,13 @@ exports.teekConfig = config_1.defineTeekConfig({
         size: "default",
         background: false,
         hideOnSinglePage: false
-    }
+    },
+    siteAnalytics: [
+        {
+            provider: "baidu",
+            options: {
+                id: "baefad2ec086c7f7ddb868440ed0a558"
+            }
+        },
+    ]
 });
