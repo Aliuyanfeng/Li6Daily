@@ -4,6 +4,7 @@ export default [
   { text: "Golang", link: "/Golang/基础环境.md" },
   { text: "Python", link: "/Python/psycopg2.md" },
   { text: "Protocol", link: "/Protocol/index.md" },
+  { text: "OCR", link: "/OCR/认识OCR.md" },
   { text: "Other", link: "/Other/Supervisor.md" },
   {
     text: "More",

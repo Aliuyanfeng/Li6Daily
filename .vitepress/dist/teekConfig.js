@@ -5,7 +5,12 @@ var config_1 = require("vitepress-theme-teek/config");
 // Teek 主题配置
 exports.teekConfig = config_1.defineTeekConfig({
     vitePlugins: {
-        autoFrontmatter: true
+        autoFrontmatter: true,
+        sidebar: true,
+        sidebarOption: {
+            ignoreList: ['/', 'assets'],
+            ignoreWarn: true
+        }
     },
     teekTheme: true,
     teekHome: true,
@@ -78,7 +83,7 @@ exports.teekConfig = config_1.defineTeekConfig({
         copyright: {
             show: true,
             createYear: 2024,
-            suffix: "PowerBy Aliu"
+            suffix: "Li6 Blog | Built with VitePress & Teek"
         },
         // ICP 备案信息配置
         icpRecord: {

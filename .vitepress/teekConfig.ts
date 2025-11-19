@@ -4,6 +4,11 @@ import { defineTeekConfig } from "vitepress-theme-teek/config";
 export const teekConfig = defineTeekConfig({
   vitePlugins: {
     autoFrontmatter: true,
+    sidebar: true, // 是否启用 sidebar 插件
+    sidebarOption: {
+      ignoreList: ['/', 'assets'], // sidebar 插件忽略的路径列表，支持 glob 表达式
+      ignoreWarn: true, // 是否在控制台显示忽略路径的警告信息
+    }, // sidebar 插件配置项
   },
   teekTheme: true,
   teekHome: true,
@@ -76,7 +81,7 @@ export const teekConfig = defineTeekConfig({
     copyright: {
       show: true, // 是否显示博客版权
       createYear: 2024, // 创建年份
-      suffix: "PowerBy Aliu", // 后缀
+      suffix: "Li6 Blog | Built with VitePress & Teek", // 后缀
     },
     // ICP 备案信息配置
     icpRecord: {

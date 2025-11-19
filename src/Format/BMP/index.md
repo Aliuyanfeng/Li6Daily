@@ -1,6 +1,6 @@
 ---
 date: 2025-04-16 16:51:34
-title: index
+title: 认识BMP
 permalink: /pages/ca266f
 categories:
   - Format

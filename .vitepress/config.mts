@@ -12,21 +12,21 @@ const isProd = process.env.DEPLOY_PLATFORM === 'github'
 export default defineConfig({
   extends: teekConfig,
   appearance: true,
-  // head: [
-  //   ["link", { rel: "icon", href: "/Li6Daily/favicon.ico" }],
-  //   ["link", { rel: "preconnect", href: "https://fonts.googleapis.com" }],
-  //   [
-  //     "link",
-  //     { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "" },
-  //   ],
-  //   [
-  //     "link",
-  //     {
-  //       href: "https://fonts.googleapis.com/css2?family=Roboto&display=swap",
-  //       rel: "stylesheet",
-  //     },
-  //   ],
-  // ],
+  head: [
+    ["link", { rel: "icon", href: "/favicon.ico" }],
+    ["link", { rel: "preconnect", href: "https://fonts.googleapis.com" }],
+    [
+      "link",
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "" },
+    ],
+    [
+      "link",
+      {
+        href: "https://fonts.googleapis.com/css2?family=Roboto&display=swap",
+        rel: "stylesheet",
+      },
+    ],
+  ],
   base: isProd ? '/Li6Daily/' : '/',  // GitHub 用子目录，Cloudflare 用根路径
   srcDir: "./src",
   outDir: ".vitepress/dist",
@@ -53,11 +53,6 @@ export default defineConfig({
     },
     nav: nav,
     sidebar: sidebar,
-    // socialLinks: [{ icon: "github", link: "https://github.com/Aliuyanfeng" }],
-    // footer: {
-    //   message: 'Released under the MIT License.',
-    //   copyright: 'Copyright © 2024-PowerBy Aliu'
-    // },
     lastUpdatedText: "最后更新",
   },
   
