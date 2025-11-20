@@ -12,8 +12,10 @@ const isProd = process.env.DEPLOY_PLATFORM === 'github'
 export default defineConfig({
   extends: teekConfig,
   appearance: true,
+  title:"Li6Daily",
+  description: "个人技术博客，记录学习和工作中的点滴。",
   head: [
-    ["link", { rel: "icon", href: "/favicon.ico" }],
+    ["link", { rel: "icon", href: "/favicon.png" }],
     ["link", { rel: "preconnect", href: "https://fonts.googleapis.com" }],
     [
       "link",
