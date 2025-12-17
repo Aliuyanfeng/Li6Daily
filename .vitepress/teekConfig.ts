@@ -1,4 +1,14 @@
 import { defineTeekConfig } from "vitepress-theme-teek/config";
+import type { TeekConfig } from "vitepress-theme-teek/config";
+// 文档配置
+export const teekDocConfig: TeekConfig = {
+  themeEnhance: {
+    layoutSwitch: {
+      defaultMode: "bothWidthAdjustable",
+    },
+  },
+};
+
 
 // Teek 主题配置
 export const teekConfig = defineTeekConfig({
@@ -67,8 +77,9 @@ export const teekConfig = defineTeekConfig({
   ],
   // 页脚配置
   footerInfo: {
+    // customHtml: `<span id="runtime"></span>`,
     // 页脚信息，支持 HTML 格式（位于主题版权上方）
-    topMessage: [""],
+    topMessage: [`<span id="runtime">22</span>`],
     // 页脚信息，支持 HTML 格式（位于主题版权下方）
     bottomMessage: ["Released under the MIT License."],
     // 主题版权配置
@@ -83,18 +94,20 @@ export const teekConfig = defineTeekConfig({
       createYear: 2024, // 创建年份
       suffix: "Li6 Blog | Built with VitePress & Teek", // 后缀
     },
-    // ICP 备案信息配置
-    icpRecord: {
-      name: "暂未备案",
-      link: "http://beian.miit.gov.cn/",
-    },
-    // 网络安全备案信息配置
-    securityRecord: {
-      name: "暂未备案",
-      link: "",
-    },
+    // // ICP 备案信息配置
+    // icpRecord: {
+    //   name: "暂未备案",
+    //   link: "http://beian.miit.gov.cn/",
+    // },
+    // // 网络安全备案信息配置
+    // securityRecord: {
+    //   name: "暂未备案",
+    //   link: "",
+    // },
   },
   docAnalysis: {
-    overrideInfo: [{ key: "totalPosts", label: "文章总数目" }],
+    overrideInfo: [
+      { key: "totalPosts", label: "文章总数目" },
+      { key: "runtime", show: false },],
   },
 });

@@ -2,7 +2,107 @@
 date: 2024-09-20 10:01:01
 title: ftp
 permalink: /pages/44d720
+top: true
 categories:
   - Protocol
   - 文件传输协议
 ---
+
+
+## Liux FTP 服务 aarch64 架构
+vsftpd 部署手册（基于 RPM 安装方式,仅供参考）
+
+本文档说明如何在 Linux 系统上安装、配置并启动 vsftpd 服务，并创建一个可正常使用的 FTP 用户。
+
+前置条件：
+- 关闭防火墙  
+`systemctl stop firewalld`  
+`systemctl disable firewalld`
+
+- 关闭安全模式
+`vim /etc/selinux/config`      
+设置`SELINUX=disabled`
+
+
+1. 安装 vsftpd 服务
+
+将下载好的 RPM 包放到服务器，例如 /tmp 目录：
+
+`rpm -ivh vsftpd-3.0.3-30.ky10.aarch64.rpm`  
+
+
+命令执行成功后，`vsftpd` 会被安装到系统中。
+
+2. 检查服务状态
+
+安装完成后，vsftpd 默认处于未启动状态，可通过以下命令检查：
+
+`systemctl status vsftpd`  
+
+
+若显示为 `inactive` 或 `dead`，属于正常情况。
+
+3. 修改配置文件
+
+vsftpd 的主配置文件路径为：
+
+`/etc/vsftpd/vsftpd.conf`  
+
+
+将该文件内容修改为附件中提供的配置内容（根据实际需求覆盖原内容）。
+
+修改完成后保存退出。
+
+4. 启动服务
+
+编辑配置完成后，启动 vsftpd 服务：
+
+`systemctl start vsftpd`  
+
+
+再次查看状态确认服务正常运行：
+
+`systemctl status vsftpd`  
+
+
+若状态为 `active (running)`，说明启动成功。
+
+5. 创建 FTP 用户
+
+创建一个用于登录 FTP 的系统用户：
+
+`adduser ftpuser`     
+`passwd ftpuser`  
+
+
+设置好密码后，该用户的主目录会自动创建为：
+
+`/home/ftpuser`
+
+6. 测试目录准备
+
+切换到刚创建的用户：
+
+`su ftpuser`  
+
+`cd /home/ftpuser`
+
+在主目录中创建测试用目录或文件：
+
+`mkdir -p /home/ftpuser/sample`    
+`touch /home/ftpuser/sample/test.txt`
+
+
+该目录用于验证 FTP 读写是否正常。
+
+7. 重启服务使配置生效
+
+所有修改完成后执行：
+
+`systemctl restart vsftpd`  
+确保配置已重新加载。
+
+8. 设置开启自启动
+
+`systemctl enable vsftpd`
+

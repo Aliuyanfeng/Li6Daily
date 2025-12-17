@@ -1,7 +1,15 @@
 "use strict";
 exports.__esModule = true;
-exports.teekConfig = void 0;
+exports.teekConfig = exports.teekDocConfig = void 0;
 var config_1 = require("vitepress-theme-teek/config");
+// 文档配置
+exports.teekDocConfig = {
+    themeEnhance: {
+        layoutSwitch: {
+            defaultMode: "bothWidthAdjustable"
+        }
+    }
+};
 // Teek 主题配置
 exports.teekConfig = config_1.defineTeekConfig({
     vitePlugins: {
@@ -69,8 +77,9 @@ exports.teekConfig = config_1.defineTeekConfig({
     ],
     // 页脚配置
     footerInfo: {
+        // customHtml: `<span id="runtime"></span>`,
         // 页脚信息，支持 HTML 格式（位于主题版权上方）
-        topMessage: [""],
+        topMessage: ["<span id=\"runtime\">22</span>"],
         // 页脚信息，支持 HTML 格式（位于主题版权下方）
         bottomMessage: ["Released under the MIT License."],
         // 主题版权配置
@@ -84,19 +93,12 @@ exports.teekConfig = config_1.defineTeekConfig({
             show: true,
             createYear: 2024,
             suffix: "Li6 Blog | Built with VitePress & Teek"
-        },
-        // ICP 备案信息配置
-        icpRecord: {
-            name: "暂未备案",
-            link: "http://beian.miit.gov.cn/"
-        },
-        // 网络安全备案信息配置
-        securityRecord: {
-            name: "暂未备案",
-            link: ""
         }
     },
     docAnalysis: {
-        overrideInfo: [{ key: "totalPosts", label: "文章总数目" }]
+        overrideInfo: [
+            { key: "totalPosts", label: "文章总数目" },
+            { key: "runtime", show: false },
+        ]
     }
 });
