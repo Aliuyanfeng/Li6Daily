@@ -13,31 +13,24 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 9
-
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+          cache: npm
+      - run: npm install --frozen-lockfile
 
       - name: Build
-        run: pnpm docs:build
+        run: npm run docs:build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: .vitepress/dist
-
+          # cname: example.com # if wanna deploy to custom domain
   # mirror:
   #   runs-on: ubuntu-latest
   #   steps:
@@ -56,11 +49,11 @@ jobs:
   #         git push -f gitlab main
 
 
-    #"@teek/components": "workspace:*",
-    #"@teek/config": "workspace:*",
-    #"@teek/helper": "workspace:*",
-    #"@teek/composables": "workspace:*",
-    #"@teek/locale": "workspace:*",
-    #"@teek/markdown": "workspace:*",
-    #"@teek/static": "workspace:*",
-    #"@teek/theme-chalk": "workspace:*"
+    # "@teek/components": "workspace:*",
+    # "@teek/config": "workspace:*",
+    # "@teek/helper": "workspace:*",
+    # "@teek/composables": "workspace:*",
+    # "@teek/locale": "workspace:*",
+    # "@teek/markdown": "workspace:*",
+    # "@teek/static": "workspace:*",
+    # "@teek/theme-chalk": "workspace:*"
