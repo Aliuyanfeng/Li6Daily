@@ -12,14 +12,6 @@
     "vitepress-theme-teek": "^1.5.2"
   },
   "dependencies": {
-    "vitepress-markdown-timeline": "^1.2.1",
-    "@teek/components": "workspace:*",
-    "@teek/config": "workspace:*",
-    "@teek/helper": "workspace:*",
-    "@teek/composables": "workspace:*",
-    "@teek/locale": "workspace:*",
-    "@teek/markdown": "workspace:*",
-    "@teek/static": "workspace:*",
-    "@teek/theme-chalk": "workspace:*"
+    "vitepress-markdown-timeline": "^1.2.1"
   }
 }
