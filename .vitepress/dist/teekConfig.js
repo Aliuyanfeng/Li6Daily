@@ -16,10 +16,13 @@ exports.teekConfig = config_1.defineTeekConfig({
         autoFrontmatter: true,
         sidebar: true,
         sidebarOption: {
-            ignoreList: ['/', 'assets'],
-            ignoreWarn: true
+            ignoreList: ['/', 'assets', 'images'],
+            ignoreWarn: true,
+            ignoreIndexMd: true,
+            collapsed: false
         }
     },
+    sidebarTrigger: true,
     teekTheme: true,
     teekHome: true,
     pageStyle: 'segment-nav',

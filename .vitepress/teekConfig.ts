@@ -9,17 +9,20 @@ export const teekDocConfig: TeekConfig = {
   },
 };
 
-
+ 
 // Teek 主题配置
 export const teekConfig = defineTeekConfig({
   vitePlugins: {
     autoFrontmatter: true,
     sidebar: true, // 是否启用 sidebar 插件
     sidebarOption: {
-      ignoreList: ['/', 'assets'], // sidebar 插件忽略的路径列表，支持 glob 表达式
+      ignoreList: ['/', 'assets','images'], // sidebar 插件忽略的路径列表，支持 glob 表达式
       ignoreWarn: true, // 是否在控制台显示忽略路径的警告信息
+      ignoreIndexMd:true, // 是否忽略每个目录下的 index.md 文件
+      collapsed: false, // 是否默认折叠侧边栏
     }, // sidebar 插件配置项
   },
+  sidebarTrigger: true, // 启用侧边栏触发器
   teekTheme: true,
   teekHome: true,
   pageStyle: 'segment-nav',
