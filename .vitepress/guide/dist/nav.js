@@ -3,7 +3,7 @@ exports.__esModule = true;
 exports["default"] = [
     // { text: "Home", link: "/" },
     { text: "Linux", link: "/Linux/基础知识.md" },
-    { text: "Golang", link: "/Golang/基础环境.md" },
+    { text: "Golang", link: "/Golang/01.基础环境.md" },
     { text: "Python", link: "/Python/psycopg2.md" },
     { text: "Protocol", link: "/Protocol/index.md" },
     { text: "OCR", link: "/OCR/认识OCR.md" },
