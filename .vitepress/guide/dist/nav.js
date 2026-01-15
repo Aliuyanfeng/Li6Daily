@@ -2,12 +2,12 @@
 exports.__esModule = true;
 exports["default"] = [
     // { text: "Home", link: "/" },
-    { text: "Linux", link: "/Linux/基础知识.md" },
-    { text: "Golang", link: "/Golang/01.基础环境.md" },
-    { text: "Python", link: "/Python/psycopg2.md" },
-    { text: "Protocol", link: "/Protocol/index.md" },
-    { text: "OCR", link: "/OCR/认识OCR.md" },
-    { text: "Other", link: "/Other/Supervisor.md" },
+    { text: "Linux", link: "/Linux/基础知识.md", activeMatch: '/Linux/' },
+    { text: "Golang", link: "/Golang/01.基础环境.md", activeMatch: '/Golang/' },
+    { text: "Python", link: "/Python/psycopg2.md", activeMatch: '/Python/' },
+    { text: "Protocol", link: "/Protocol/index.md", activeMatch: '/Protocol/' },
+    { text: "OCR", link: "/OCR/认识OCR.md", activeMatch: '/OCR/' },
+    { text: "Other", link: "/Other/Supervisor.md", activeMatch: '/Other/' },
     {
         text: "More",
         items: [

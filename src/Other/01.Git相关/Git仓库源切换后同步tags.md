@@ -1,6 +1,6 @@
 ---
 date: 2025-12-22 09:16:01
-title: git仓库源切换后同步tags
+title: Git仓库源切换后同步tags
 permalink: /pages/be7491
 categories:
   - Other
