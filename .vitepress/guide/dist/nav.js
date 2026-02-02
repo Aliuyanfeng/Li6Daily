@@ -7,6 +7,7 @@ exports["default"] = [
     { text: "Python", link: "/Python/psycopg2.md", activeMatch: '/Python/' },
     { text: "Protocol", link: "/Protocol/index.md", activeMatch: '/Protocol/' },
     { text: "OCR", link: "/OCR/认识OCR.md", activeMatch: '/OCR/' },
+    { text: "PenTest", link: "/PenTest/01.了解PT.md", activeMatch: '/PenTest/' },
     { text: "Other", link: "/Other/Supervisor.md", activeMatch: '/Other/' },
     {
         text: "More",
