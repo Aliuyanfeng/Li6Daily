@@ -31,3 +31,9 @@ pkgs_dirs:
 ```
 
 保存后关闭文件，再次运行命令查看位置是否变更，如果仍未变更，请检查配置得文件夹是否有权限问题，可将 Anaconda3 安装路径的 Users 权限改为完全控制。
+
+
+## 创建虚拟环境
+``` shell
+conda create --name vt-api python=3.6
+```
