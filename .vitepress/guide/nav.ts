@@ -1,12 +1,13 @@
 export default [
   // { text: "Home", link: "/" },
-  { text: "Linux", link: "/Linux/基础知识.md", activeMatch: '/Linux/'},
-  { text: "Golang", link: "/Golang/01.基础环境.md", activeMatch: '/Golang/' },
-  { text: "Python", link: "/Python/psycopg2.md", activeMatch: '/Python/' },
-  { text: "Protocol", link: "/Protocol/index.md", activeMatch: '/Protocol/' },
-  { text: "OCR", link: "/OCR/认识OCR.md", activeMatch: '/OCR/' },
-  { text: "PenTest", link: "/PenTest/01.了解PT.md", activeMatch: '/PenTest/' },
-  { text: "Other", link: "/Other/Supervisor.md", activeMatch: '/Other/'},
+  { text: "AI", link: "/AI/index.md", activeMatch: "/AI/" },
+  { text: "Linux", link: "/Linux/基础知识.md", activeMatch: "/Linux/" },
+  { text: "Golang", link: "/Golang/01.基础环境.md", activeMatch: "/Golang/" },
+  { text: "Python", link: "/Python/psycopg2.md", activeMatch: "/Python/" },
+  { text: "Protocol", link: "/Protocol/index.md", activeMatch: "/Protocol/" },
+  { text: "OCR", link: "/OCR/认识OCR.md", activeMatch: "/OCR/" },
+  { text: "PenTest", link: "/PenTest/01.了解PT.md", activeMatch: "/PenTest/" },
+  { text: "Other", link: "/Other/Supervisor.md", activeMatch: "/Other/" },
   {
     text: "More",
     items: [
@@ -18,7 +19,7 @@ export default [
           { text: "归档", link: "/archives/" },
           { text: "清单", link: "/articleOverview/" },
         ],
-      }
+      },
     ],
   },
 ];
