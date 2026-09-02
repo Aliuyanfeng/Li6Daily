@@ -8,7 +8,7 @@ export default [
   { text: "OCR", link: "/OCR/认识OCR.md", activeMatch: "/OCR/" },
   { text: "PenTest", link: "/PenTest/01.了解PT.md", activeMatch: "/PenTest/" },
   { text: "Other", link: "/Other/Supervisor.md", activeMatch: "/Other/" },
-  { text: "Travel", items: [{ text: "北疆路书", link: "/20261001.html", target: "_blank" }] },
+  { text: "Travel", items: [{ text: "大兴安岭小环线", link: "/20261001.html", target: "_blank" }] },
   {
     text: "More",
     items: [
