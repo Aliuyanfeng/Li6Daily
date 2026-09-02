@@ -1,6 +1,5 @@
 import Teek, { useCopyBanner } from "vitepress-theme-teek";
 import ContributeChart from "./components/ContributeChart.vue";
-import TeekLayoutProvider from "./components/TeekLayoutProvider.vue"; // 布局组件
 import { h } from "vue";
 import "vitepress-theme-teek/index.css"; // 引入主题样式
 import "vitepress-theme-teek/theme-chalk/tk-code-block-mobile.css"; // 引入移动端代码块样式
@@ -22,15 +21,15 @@ import "vitepress-theme-teek/tk-plus/fade-up-animation.scss"; // Banner 描述�
 import "vitepress-markdown-timeline/dist/theme/index.css";
 
 export default {
-  extends: Teek,  
+  extends: Teek,
   Layout: () =>
     h(Teek.Layout, null, {
       /**
- * 渲染贡献图表组件
- * @returns {VNode} 返回 ContributeChart 组件的虚拟节点
- */
-"teek-archives-top-before": () => h(ContributeChart),
-  }),
+       * 渲染贡献图表组件
+       * @returns {VNode} 返回 ContributeChart 组件的虚拟节点
+       */
+      "teek-archives-top-before": () => h(ContributeChart),
+    }),
   setup: () => {
     /**
      * 配置方式，可自定义提示语

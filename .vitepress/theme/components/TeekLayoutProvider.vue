@@ -1,5 +1,5 @@
 <script setup lang="ts" name="TeekLayoutProvider">
-import Teek, { clockIcon } from "vitepress-theme-teek";
+import { clockIcon } from "vitepress-theme-teek";
 import { watch, nextTick } from "vue";
 import { useData } from "vitepress";
 import { useRuntime } from "../composables/useRuntime";
@@ -18,6 +18,6 @@ watch(
     if (newVal.layout === "home") start();
     else stop();
   },
-  { immediate: true }
+  { immediate: true },
 );
 </script>

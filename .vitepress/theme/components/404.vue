@@ -1,14 +1,6 @@
-<script setup lang="ts">
-import { withBase, useRouter } from "vitepress";
-
-const router = useRouter();
-
-const ns = "error-page";
-</script>
-
 <template>
-  <div >
-    <div >
+  <div>
+    <div>
       <h2>404</h2>
       <h4>抱歉，您访问的页面不存在~🤷‍♂️🤷‍♀️</h4>
       <button>返回首页</button>
@@ -16,6 +8,4 @@ const ns = "error-page";
   </div>
 </template>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>
