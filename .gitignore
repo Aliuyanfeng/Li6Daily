@@ -2,3 +2,4 @@ node_modules/
 .workbuddy
 CODEBUDDY.md
 .vitepress/dist/
+.vitepress/cache/

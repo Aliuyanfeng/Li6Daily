@@ -83,6 +83,7 @@ import {
   mergeModels,
   mergeProps,
   nextTick,
+  nodeOps,
   normalizeClass,
   normalizeProps,
   normalizeStyle,
@@ -101,6 +102,7 @@ import {
   onUpdated,
   onWatcherCleanup,
   openBlock,
+  patchProp,
   popScopeId,
   provide,
   proxyRefs,
@@ -168,8 +170,8 @@ import {
   withMemo,
   withModifiers,
   withScopeId
-} from "./chunk-OXNFWQPG.js";
-import "./chunk-SNAQBZPT.js";
+} from "./chunk-IU2LICYG.js";
+import "./chunk-PZ5AY32C.js";
 export {
   BaseTransition,
   BaseTransitionPropsValidators,
@@ -255,6 +257,7 @@ export {
   mergeModels,
   mergeProps,
   nextTick,
+  nodeOps,
   normalizeClass,
   normalizeProps,
   normalizeStyle,
@@ -273,6 +276,7 @@ export {
   onUpdated,
   onWatcherCleanup,
   openBlock,
+  patchProp,
   popScopeId,
   provide,
   proxyRefs,
