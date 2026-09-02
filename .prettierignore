@@ -1,0 +1,14 @@
+node_modules/
+packages/
+.vitepress/cache/
+.vitepress/dist/
+.vitepress/guide/dist/
+.vitepress/theme/dist/
+.vitepress/theme/composables/dist/
+# 编码异常的历史文件，禁止格式化工具重写（会破坏字节内容）
+.vitepress/teekConfig.template.ts
+.vitepress/guide/sidebar.ts
+package-lock.json
+# 博客正文保持作者原样；public 下为静态资源与第三方成品页面
+src/**/*.md
+src/public/
