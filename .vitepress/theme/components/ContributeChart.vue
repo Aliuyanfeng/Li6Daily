@@ -16,7 +16,7 @@ const beforeOnYear = formatDate(new Date(new Date().getTime() - 364 * 24 * 60 * 
 const contributeList = computed(() => {
   const contributeObject = ref({});
 
-  posts.value.sortPostsByDate.forEach(item => {
+  posts.value.sortPostsByDate.forEach((item) => {
     if (!item.date) return;
 
     const date = item.date.substring(0, 10);
@@ -34,8 +34,8 @@ const contributeChart = ref();
 
 const { create } = useIntersectionObserver(
   chartRef,
-  entries => {
-    entries.forEach(entry => {
+  (entries) => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
         // 使用 requestAnimationFrame 确保在下一帧执行
         requestAnimationFrame(() => {
@@ -48,7 +48,7 @@ const { create } = useIntersectionObserver(
       }
     });
   },
-  0.1
+  0.1,
 );
 
 // Echarts 配置项
@@ -114,11 +114,11 @@ const renderChart = (data: any) => {
 
 watch(
   contributeList,
-  async newValue => {
+  async (newValue) => {
     await nextTick();
     renderChart(newValue);
   },
-  { flush: "post" }
+  { flush: "post" },
 );
 
 watch(isDark, async () => {

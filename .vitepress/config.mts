@@ -1,26 +1,21 @@
 import { defineConfig } from "vitepress";
-import nav from "./guide/nav"
+import nav from "./guide/nav";
 import sidebar from "./guide/sidebar";
 import timeline from "vitepress-markdown-timeline";
-import process from 'node:process';
+import process from "node:process";
 import { teekConfig } from "./teekConfig";
 
-const isProd = process.env.DEPLOY_PLATFORM === 'github'
-
-
+const isProd = process.env.DEPLOY_PLATFORM === "github";
 
 export default defineConfig({
   extends: teekConfig,
   appearance: true,
-  title:"Li6Daily",
+  title: "Li6Daily",
   description: "个人技术博客，记录学习和工作中的点滴。",
   head: [
     ["link", { rel: "icon", href: "/favicon.png" }],
     ["link", { rel: "preconnect", href: "https://fonts.googleapis.com" }],
-    [
-      "link",
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "" },
-    ],
+    ["link", { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "" }],
     [
       "link",
       {
@@ -29,24 +24,24 @@ export default defineConfig({
       },
     ],
     [
-      'script',
+      "script",
       {
-        type: 'text/javascript',
-        src: 'https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/animejs/3.2.1/anime.min.js', //字节cdn
-        id: 'anime.min.js-js',
-        defer: 'defer',
+        type: "text/javascript",
+        src: "https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/animejs/3.2.1/anime.min.js", //字节cdn
+        id: "anime.min.js-js",
+        defer: "defer",
       },
     ],
     [
-      'script',
+      "script",
       {
         // src: "https://cpython666.github.io/js/clickjs/fireworks.js",
-        src: 'https://live2d-hyde.netlify.app/Clickfireworks.js',
-        defer: 'defer',
+        src: "https://live2d-hyde.netlify.app/Clickfireworks.js",
+        defer: "defer",
       },
     ],
   ],
-  base: isProd ? '/Li6Daily/' : '/',  // GitHub 用子目录，Cloudflare 用根路径
+  base: isProd ? "/Li6Daily/" : "/", // GitHub 用子目录，Cloudflare 用根路径
   srcDir: "./src",
   outDir: ".vitepress/dist",
   cleanUrls: true,
@@ -67,23 +62,23 @@ export default defineConfig({
               closeText: "关闭",
             },
           },
-        }
+        },
       },
     },
     nav: nav,
     sidebar: sidebar,
     lastUpdatedText: "最后更新",
-    outline:{
-      level: [2,3],
+    outline: {
+      level: [2, 3],
       label: "本页目录",
-    }
+    },
   },
-  
+
   markdown: {
     lineNumbers: true,
     image: {
       // 默认禁用图片懒加载
-      lazyLoading: true
+      lazyLoading: true,
     },
     // 更改容器默认值标题
     container: {

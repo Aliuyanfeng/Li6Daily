@@ -50,10 +50,7 @@ export interface UseRuntimeOptions {
   secondColor?: string;
 }
 
-export const useRuntime = (
-  initDate: MaybeRef<string>,
-  options: UseRuntimeOptions = {}
-) => {
+export const useRuntime = (initDate: MaybeRef<string>, options: UseRuntimeOptions = {}) => {
   const {
     selector = "#runtime",
     immediate = false,
