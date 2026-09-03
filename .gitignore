@@ -1,5 +1,6 @@
 node_modules/
 .workbuddy
 CODEBUDDY.md
-.vitepress/dist/
 .vitepress/cache/
+.vitepress/.temp/
+.vitepress/**/dist/
