@@ -1,5 +1,6 @@
 import Teek, { useCopyBanner } from "vitepress-theme-teek";
 import ContributeChart from "./components/ContributeChart.vue";
+import PostStyleList from "./components/PostStyleList.vue";
 import { h } from "vue";
 import "vitepress-theme-teek/index.css"; // 引入主题样式
 import "vitepress-theme-teek/theme-chalk/tk-code-block-mobile.css"; // 引入移动端代码块样式
@@ -29,6 +30,13 @@ export default {
        * @returns {VNode} 返回 ContributeChart 组件的虚拟节点
        */
       "teek-archives-top-before": () => h(ContributeChart),
+
+      /**
+       * 接管文章列表渲染，支持卡片 / 列表两种视图切换（选择结果持久化到 localStorage）
+       * @param {Object} slotProps Teek 暴露的 currentPosts 与 transitionName
+       * @returns {VNode} 返回 PostStyleList 组件的虚拟节点
+       */
+      "teek-home-post": (slotProps: Record<string, unknown>) => h(PostStyleList, slotProps),
     }),
   setup: () => {
     /**
