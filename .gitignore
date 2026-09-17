@@ -4,3 +4,4 @@ CODEBUDDY.md
 .vitepress/cache/
 .vitepress/.temp/
 .vitepress/**/dist/
+.avlcode/

@@ -1,13 +1,4 @@
 import { defineTeekConfig } from "vitepress-theme-teek/config";
-import type { TeekConfig } from "vitepress-theme-teek/config";
-// 文档配置
-export const teekDocConfig: TeekConfig = {
-  themeEnhance: {
-    layoutSwitch: {
-      defaultMode: "bothWidthAdjustable",
-    },
-  },
-};
 
 // Teek 主题配置
 export const teekConfig = defineTeekConfig({
@@ -25,12 +16,28 @@ export const teekConfig = defineTeekConfig({
   teekTheme: true,
   teekHome: true,
   pageStyle: "segment-nav",
-  blogger: {
-    avatar: "",
-    shape: "circle",
-    name: "Aliu",
-    slogan: "",
+  // 主题增强面板，启用后导航栏右侧出现入口（布局宽度调节 / 主题色 / 聚光灯）
+  themeEnhance: {
+    enabled: true,
+    position: "top",
+    layoutSwitch: {
+      defaultMode: "bothWidthAdjustable", // 内容区与页面整体宽度均可拖拽调节
+    },
   },
+  // 博主信息，显示在首页卡片栏第一张
+  blogger: {
+    avatar: "https://github.com/Aliuyanfeng.png?size=200", // GitHub 头像，可替换为 src/public 下的本地图片
+    shape: "circle-rotate", // 鼠标悬停时头像旋转
+    name: "Aliu",
+    slogan: "记录学习与工作的点滴",
+    status: {
+      icon: "✍️",
+      size: 24,
+      title: "记录中",
+    },
+  },
+  // 社交信息，点击图标跳转到个人主页
+  social: [{ icon: "mdi:github", name: "GitHub", link: "https://github.com/Aliuyanfeng" }],
   banner: {
     name: "📝 啥都写的知识仓库",
     descStyle: "types",
@@ -44,6 +51,9 @@ export const teekConfig = defineTeekConfig({
   friendLink: {
     enabled: false,
   },
+  // 首页卡片栏排序（博主卡片固定第一位，不可调整）
+  // 导航类卡片（分类、标签）前置，内容推荐（精选文章）居中，站点统计垫底
+  homeCardSort: ["category", "tag", "topArticle", "friendLink", "docAnalysis"],
   // 文章配置
   post: {
     postStyle: "card", // 文章列表风格
@@ -68,6 +78,39 @@ export const teekConfig = defineTeekConfig({
     size: "default", // 分页大小
     background: false, // 是否为分页按钮添加背景色
     hideOnSinglePage: false, // 只有一页时是否隐藏
+  },
+  // 文章信息分析，首页文章列表与文章页均生效
+  articleAnalyze: {
+    showIcon: true, // 是否显示作者、日期、分类、标签等信息前的图标
+    dateFormat: "yyyy-MM-dd", // 日期格式
+    showInfo: true, // 是否显示文章信息
+    showAuthor: true, // 是否显示作者
+    showCreateDate: true, // 是否显示创建日期
+    showUpdateDate: true, // 文章页是否显示更新日期
+    showCategory: true, // 是否显示分类
+    showTag: true, // 是否显示标签
+  },
+  // 文章页顶部面包屑
+  breadcrumb: {
+    enabled: true,
+    separator: "/",
+    homeLabel: "首页",
+  },
+  // 文章页底部的最近更新栏
+  articleUpdate: {
+    enabled: true,
+    limit: 3, // 显示条数
+  },
+  // 代码块配置
+  codeBlock: {
+    enabled: true,
+    collapseHeight: 700, // 超过该高度自动折叠
+    langTextTransform: "uppercase", // 语言标签大写
+  },
+  // 右下角回到顶部按钮，显示为阅读进度环
+  backTop: {
+    enabled: true,
+    content: "progress",
   },
   siteAnalytics: [
     {

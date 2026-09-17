@@ -56,16 +56,45 @@ h2{font-size:clamp(24px,3.4vw,31px);margin:4px 0 20px;display:flex;align-items:c
 h2::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,#d9cba6,transparent)}
 .note{font-size:13px;color:var(--ink3)}
 
-/* ===== 全程脉络（里程条）===== */
-.rb{display:flex;align-items:stretch;margin:16px 0 4px;overflow-x:auto;padding:8px 2px 14px}
-.rbnode{text-align:center;flex:none;min-width:88px}
+/* ===== 全程脉络（里程条 · 蛇形回转）===== */
+.rbwrap{margin:16px 0 4px}
+.rb{display:flex;align-items:stretch;padding:8px 0}
+.rbnode{text-align:center;flex:1 1 0;min-width:0}
 .rbnode i{display:block;width:14px;height:14px;border:3.5px solid var(--c,#26301f);background:#fff;border-radius:50%;margin:2px auto 7px}
 .rbnode b{font-size:13.5px;display:block;line-height:1.4}
-.rbnode span{font-size:11.5px;color:var(--ink3);display:block}
-.rbseg{flex:1;min-width:100px;position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;padding-top:2px}
+.rbnode span{font-size:11.5px;color:var(--ink3);display:block;line-height:1.45}
+.rbseg{flex:1.2 1 0;min-width:0;position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;padding-top:2px}
 .rbseg em{font-style:normal;font-size:11.5px;color:#9a6a1f;margin-bottom:5px;white-space:nowrap;font-family:var(--serif)}
 .rbseg u{display:block;height:2px;background:#c9b98d;width:100%;position:relative;text-decoration:none}
 .rbseg u::after{content:'';position:absolute;right:-1px;top:-3.5px;border:4.5px solid transparent;border-left-color:#c9b98d}
+/* 下行：继续向左走，箭头反向 */
+.rb.rev .rbseg u::after{right:auto;left:-1px;border-left-color:transparent;border-right-color:#c9b98d}
+/* 回转拐弯：与上下行末节点等宽的对齐盒，内部绝对定位画「下折 + 箭头」 */
+.rbturn{display:flex;align-items:stretch;height:56px;margin:0 0 -20px}
+.rbturn .tspacer{flex:6.6 1 0}      /* 6.6 = 前 3 节点(1×3) + 3 段落(1.2×3)，保证 .tcurve 与末节点严格等宽 */
+.rbturn .tcurve{flex:1 1 0;min-width:0;position:relative}
+.rbturn svg{position:absolute;right:50%;top:-4px;width:330px;height:60px;overflow:visible;display:block}
+.rbturn text{font-family:var(--serif);font-size:11.5px;fill:#9a6a1f}
+.rbturn .tmob{display:none}
+
+@media(max-width:720px){
+  .rb{flex-direction:column;padding:0}
+  .rb.rev{flex-direction:column-reverse}
+  .rbnode{display:grid;grid-template-columns:22px 1fr;column-gap:10px;text-align:left;position:relative}
+  .rbnode i{margin:4px auto 0;align-self:start}
+  .rbnode b,.rbnode span{grid-column:2}
+  .rbnode::before{content:'';position:absolute;left:10px;top:11px;bottom:0;width:2px;background:#c9b98d}
+  .rb.rev .rbnode:first-child::before{display:none}
+  .rbseg{display:grid;grid-template-columns:22px 1fr;column-gap:10px;align-items:center;min-height:38px;padding:0}
+  .rbseg u{display:none}
+  .rbseg::before{content:'';grid-column:1;grid-row:1;justify-self:center;width:2px;height:100%;background:#c9b98d}
+  .rbseg em{margin:0;grid-column:2;white-space:normal}
+  /* 窄屏：回转段退化为普通「段」行，保证 D4 里程不丢失 */
+  .rbturn{display:grid;grid-template-columns:22px 1fr;column-gap:10px;align-items:center;height:auto;min-height:38px;margin:0;position:relative}
+  .rbturn .tspacer,.rbturn .tcurve{display:none}
+  .rbturn::before{content:'';grid-column:1;grid-row:1;justify-self:center;width:2px;height:100%;background:#c9b98d}
+  .rbturn .tmob{display:block;grid-column:2;margin:0;white-space:normal;font-family:var(--serif);font-size:12.5px;color:#9a6a1f}
+}
 
 /* ===== 概览统计 ===== */
 .stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:20px}
@@ -86,13 +115,18 @@ h2::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,#d9cba6,
 .tbl td{padding:9px 13px;border-top:1px solid #efe7d0;white-space:nowrap}
 .tbl tr{cursor:pointer}
 .tbl tr:hover td{background:#faf5e6}
+.tbl td.stayname{white-space:normal;font-weight:600;color:#1f2a18;min-width:200px}
+.tbl td.staynote{white-space:normal;color:var(--ink3);font-size:12.5px;min-width:150px}
+.tbl tfoot tr{cursor:default}
+.tbl tfoot td{background:#f4eeda;font-weight:600;color:#3f4a37;border-top:2px solid #ded0ab;font-family:var(--serif)}
+.tbl tfoot tr:hover td{background:#f4eeda}
 .dotc{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:0}
 .chart{margin-top:16px}
 .crow{display:flex;align-items:center;gap:10px;margin:8px 0;cursor:pointer}
 .clabel{width:112px;flex:none;font-size:13px;color:#5a5344;font-family:var(--serif)}
 .cbar{flex:1;height:22px;background:#f0e8d2;border-radius:7px;overflow:hidden}
 .cbar i{display:block;height:100%;border-radius:7px;min-width:4px;transition:width .6s ease}
-.cval{width:200px;flex:none;font-size:12.5px;color:var(--ink3)}
+.cval{width:236px;flex:none;font-size:12.5px;color:var(--ink3)}
 .crow:hover .clabel{color:var(--ink)}
 @media(max-width:640px){.cval{display:none}}
 
@@ -153,10 +187,72 @@ svg text{font-family:var(--sans)}
 .duo>div{background:#f5efe0;border-radius:12px;padding:10px 14px}
 .duo h5{margin:0 0 3px;font-size:12.5px;color:#9a6a1f;font-family:var(--kai);font-weight:600}
 .duo p{font-size:14px}
+.duo .hn{font-weight:600;color:#1f2a18}
+.duo .hnsub{display:block;font-size:12.5px;color:var(--ink3);margin-top:3px}
+.eats{display:flex;flex-wrap:wrap;align-items:center;gap:5px;margin-top:7px}
+.eats em{font-style:normal;font-size:12px;color:#9a6a1f;font-family:var(--kai);flex:none}
+.eats span{font-size:12.5px;line-height:1.5;background:#fffdf7;border:1px solid #e0d3b2;color:#6d5b33;border-radius:999px;padding:1px 9px}
 .notes{margin-top:12px;border-left:4px solid var(--c);background:#f7f2e2;border-radius:0 12px 12px 0;padding:9px 14px}
 .notes ul{margin:2px 0;padding-left:18px}
 .notes li{font-size:13.5px;color:#6d6046;margin:3px 0}
 @media(max-width:720px){.duo{grid-template-columns:1fr}.sch li{grid-template-columns:88px 1fr}}
+
+/* ===== 沿途重点（门票 / 玩法 / 演出）===== */
+.spots{display:grid;gap:11px}
+.spots>*{min-width:0}
+.spot{background:#f7f2e2;border:1px solid #eee3c8;border-radius:12px;padding:11px 14px;min-width:0}
+.sphead{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.sphead b{font-family:var(--serif);font-size:15px;color:#2c3527}
+.facts{list-style:none;margin:7px 0 0;padding:0}
+.facts li{position:relative;padding:2px 0 2px 14px;font-size:13.5px;color:#5f6349;line-height:1.65}
+.facts li::before{content:'·';position:absolute;left:1px;top:2px;color:#b3701d;font-weight:700}
+.perf{margin-top:10px;background:#fffdf7;border:1px solid #e6dcc3;border-radius:10px;padding:9px 12px 10px;overflow:auto}
+.perf h6{margin:0 0 6px;font-size:12.5px;color:#9a6a1f;font-family:var(--kai);letter-spacing:1.5px;font-weight:600}
+.ptbl{width:100%;border-collapse:collapse;font-size:12.5px;min-width:430px}
+.ptbl th{background:#f1ead6;text-align:left;padding:6px 9px;font-weight:600;white-space:nowrap}
+.ptbl td{padding:6px 9px;border-top:1px solid #efe7d0;color:#4a4636;line-height:1.6}
+.ptbl td:first-child{font-weight:600;color:#7a4a12}
+.pnote{margin:7px 0 0;font-size:11.5px;color:var(--ink3);line-height:1.6}
+.optcap{margin:10px 0 0;font-size:13px;color:#7a4a12;font-weight:600}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+.opt{background:#fffdf7;border:1px solid #e6dcc3;border-radius:10px;padding:10px 12px;min-width:0}
+.opt .oh{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.opt .oh b{font-size:13.5px;color:#2c3527}
+.opt .price{margin-left:auto;font-family:var(--serif);font-size:12.5px;color:#a8442f;background:#fbf0e6;border:1px solid #e8d3bb;border-radius:999px;padding:1px 9px}
+.opt ul{margin:7px 0 0;padding-left:16px}
+.opt li{font-size:13px;color:#6d6046;margin:3px 0;line-height:1.6}
+.optnote{margin-top:10px;border-left:4px solid #a8442f;background:#fdf3ee;border-radius:0 12px 12px 0;padding:8px 13px}
+.optnote h6{margin:0;font-size:13px;color:#a8442f;font-family:var(--sans)}
+.optnote ul{margin:4px 0 2px;padding-left:17px}
+.optnote li{font-size:13px;color:#7a4a35;margin:3px 0;line-height:1.65}
+.chan{margin-top:10px;background:#fffdf7;border:1px solid #e6dcc3;border-radius:10px;padding:9px 12px 10px}
+.chan h6{margin:0 0 7px;font-size:12.5px;color:#2f5d43;font-family:var(--sans);font-weight:600;letter-spacing:.5px}
+.chan table{width:100%;border-collapse:collapse;font-size:12.5px}
+.chan th{background:#f1ead6;text-align:left;padding:5px 8px;font-weight:600;white-space:nowrap;color:#5b5334}
+.chan td{padding:5px 8px;border-top:1px solid #efe7d0;color:#4a4636;line-height:1.6}
+.chan td:first-child{font-weight:600;color:#7a4a12}
+.chan td.cref{color:#9a9378;white-space:nowrap}
+.chan td.cy{color:#a8442f;font-weight:700;white-space:nowrap;font-family:var(--serif);font-size:13px}
+.chan .cnote{margin:7px 0 0;font-size:11.5px;color:var(--ink3);line-height:1.6}
+.routes{display:grid;gap:9px;margin-top:10px}
+.routes>*{min-width:0}
+.route{background:#fffdf7;border:1px solid #e6dcc3;border-radius:10px;padding:9px 12px;min-width:0}
+.route h6{margin:0 0 7px;font-size:12.5px;color:#2f5d43;font-family:var(--sans);font-weight:600;letter-spacing:.5px}
+.rstns{display:flex;flex-wrap:wrap;align-items:center;gap:5px 3px}
+.rstn{font-size:12.5px;color:#4a4636;background:#f4eeda;border:1px solid #e6dcc3;border-radius:999px;padding:2px 9px;white-space:nowrap}
+.rarw{font-style:normal;color:#b3701d;font-size:11px;flex:none;margin:0 1px}
+.rf{margin:7px 0 0;padding-left:16px}
+.rf li{font-size:12.5px;color:#6d6046;margin:2px 0;line-height:1.6}
+@media(max-width:720px){
+  .opts{grid-template-columns:1fr}
+  .ptbl{min-width:0}
+  .ptbl thead{display:none}
+  .ptbl tr{display:block;border-top:1px solid #efe7d0;padding:7px 2px}
+  .ptbl tr:first-child{border-top:0;padding-top:2px}
+  .ptbl td{display:block;border:0;padding:1px 0;line-height:1.65}
+  .ptbl td:first-child{font-size:13.5px;color:#7a4a12;font-weight:600;margin-bottom:2px}
+  .ptbl td:not(:first-child)::before{content:attr(data-l)'：';color:var(--ink3);font-size:11.5px}
+}
 
 /* ===== 补充提醒 ===== */
 ol.tips{list-style:none;padding:0;margin:0;counter-reset:tip}
@@ -208,12 +304,12 @@ ol.tips{list-style:none;padding:0;margin:0;counter-reset:tip}
       <h1>北疆秋色 · 8 日环线</h1>
       <span class="seal">北疆秋色</span>
     </div>
-    <p class="sub1">哈尔滨出发 → 大兴安岭 — 呼伦贝尔 — 额尔古纳卡线 — 阿尔山 → 回到哈尔滨　｜　<b>9.25 – 10.2 · 8 天 7 晚 · 约 3450 km</b></p>
+    <p class="sub1">哈尔滨出发 → 大兴安岭 — 呼伦贝尔 — 额尔古纳卡线 — 阿尔山 → 回到哈尔滨　｜　<b>9.25 – 10.2 · 8 天 7 晚 · 约 <span id="heroTot">—</span> km</b></p>
     <div class="meta">
       <span>🍂 秋色窗口期（9 月末）</span>
       <span>🌡 早晚 0–5℃ · 白天 12–18℃</span>
       <span>❄️ 有可能遇初雪</span>
-      <span>🛣 单日最长约 580km</span>
+      <span>🛣 单日最长约 <span id="metaMax">—</span> km</span>
       <span>📍 最高纬度约 51.5°N（室韦）</span>
     </div>
   </div>
@@ -225,7 +321,7 @@ ol.tips{list-style:none;padding:0;margin:0;counter-reset:tip}
   <section id="sec-overview">
     <p class="kicker">壹 · 行程速览</p>
     <h2>全程脉络与单日强度</h2>
-    <div class="rb" id="ribbon"></div>
+    <div class="rbwrap" id="ribbon"></div>
     <div class="stats" id="stats"></div>
 
     <p class="kicker" style="margin-top:34px;display:block">核心风险提示（出发前必读）</p>
@@ -234,9 +330,12 @@ ol.tips{list-style:none;padding:0;margin:0;counter-reset:tip}
     <p class="kicker" style="margin-top:34px;display:block">逐日一览</p>
     <div class="cardbox"><table class="tbl" id="ovtbl"></table></div>
 
+    <p class="kicker" style="margin-top:34px;display:block">住宿一览 · 逐晚酒店</p>
+    <div class="cardbox"><table class="tbl" id="staytbl"></table></div>
+
     <p class="kicker" style="margin-top:34px;display:block">单日里程与车程</p>
     <div class="chart" id="chart"></div>
-    <p class="note" style="margin-top:8px">注：各日里程为路书标注的干道数字；叠加绕行、进出景区与市区通勤后，全程约 3450 km。</p>
+    <p class="note" style="margin-top:8px">注：各日里程为路书标注的数字（含 D6 阿尔山森林公园往返 <span id="noteD6">—</span> km），逐日相加为 <b id="noteTot">—</b> km；实际行驶叠加市区通勤与临时绕行会略高。</p>
   </section>
 
   <!-- ============ 贰 · 路线图 ============ -->
@@ -305,10 +404,13 @@ window.addEventListener('error',function(e){
   if(b){b.style.display='block';b.textContent='页面脚本出错：'+(e&&e.message?e.message:'未知错误');}
 },true);
 
-/* ================= 数据 ================= */
+/* ================= 数据 =================
+   单一数据源：逐日里程 / 车程文案 / 纯车程小时 只在下方 CHART 维护，
+   DAYS 的 km、drive、driveH 由 CHART 自动回填（见 CHART 之后的派生块），不要在此重复填写 */
 var DAYS=[
  {n:1,date:'9月25日',color:'#2f6b4a',title:'哈尔滨 → 加格达奇',
-  km:'约580km',drive:'6.5–7h',stayPill:'住·加格达奇',stayShort:'加格达奇',
+  stayPill:'住·汉庭加格达奇站酒店',stayShort:'加格达奇',
+  hotel:'汉庭加格达奇站酒店',hotelNote:'加格达奇市区 · 9 月底已供暖',
   route:['哈尔滨','绥满高速','加格达奇'],road:'高速 + 国道',
   schedule:[['06:30','哈尔滨出发，早餐自备，中途服务区休整'],
             ['12:00','途中简单午餐'],
@@ -316,39 +418,112 @@ var DAYS=[
   strolls:[{tag:'可选',name:'北山公园',desc:'离市区很近，开车几分钟；步道平缓，登高俯瞰加格达奇与大兴安岭林海，傍晚看城市日落。1–1.5 小时，免费。'},
            {tag:'可选',name:'世纪大道 · 本地超市',desc:'市区简单散步，逛本地超市，采购零食、饮用水、暖宝宝。'}],
   meal:'本地东北菜、林区山野菜',
-  lodging:'加格达奇市区，优先选带暖气酒店（9 月底已供暖）',
+  eats:['北山川味馄饨点','一碗火麻辣烫','卫东大冷面','兴旺小肉串'],
+  lodging:'<b class="hn">汉庭加格达奇站酒店</b><span class="hnsub">加格达奇市区 · 9 月底已供暖</span>',
   notes:['今天长途赶路，不安排密集景点','抵达后把油加满']},
  {n:2,date:'9月26日',color:'#5f7f3e',title:'加格达奇 → 根河 → 莫尔道嘎 → 室韦',
-  km:'约410km',drive:'6.5–7h',stayPill:'住·室韦',stayShort:'室韦',
-  route:['加格达奇','根河','莫尔道嘎','室韦'],road:'G332 国道 · 林区盘山路多、限速多 · 坚决不开夜路',
-  schedule:[['07:00','出发，加满油'],
-            ['09:30','抵达根河，打卡冷极标志；可选「敖鲁古雅使鹿部落」（1–1.5h，喂驯鹿、鄂温克民俗）'],
-            ['11:30','根河简单午餐'],
-            ['13:00','前往莫尔道嘎；可选莫尔道嘎国家森林公园（森林小火车 1.5–2h，时间紧张可门口打卡不进园）'],
-            ['16:00','莫尔道嘎继续前往室韦，沿途林海秋色，随走随停拍照'],
-            ['18:30–19:00','抵达室韦苏木，办理入住（木刻楞木屋，建议提前预订）']],
+  stayPill:'住·额尔古纳室韦风景酒店',stayShort:'室韦',
+  hotel:'额尔古纳室韦风景酒店',hotelNote:'室韦苏木 · 木刻楞风格，入住前确认供暖',
+  route:['加格达奇','根河','莫尔道嘎','太平林场','老鹰嘴','临江','界河观景点','室韦'],road:'G332 国道 · 林区盘山路多、限速多 · 坚决不开夜路',
+  schedule:[['06:30','加格达奇出发，先把油加满，早餐自备'],
+            ['10:10','抵达根河：冷极广场、冷极温度计打卡（路边即停，20–30 分钟）'],
+            ['10:45','敖鲁古雅使鹿部落景区：不买观光车，步行约 300–400m 即到原始部落；按演出时间表卡场次，预留 1.5–2h'],
+            ['12:45','根河市区午餐'],
+            ['13:30','前往莫尔道嘎（G332 林区盘山路，限速多）'],
+            ['15:50','莫尔道嘎国家森林公园：本段仅约 1h40m——只够坐一趟小火车看森林（纯车程 1.5h、基本不下车），或门口打卡'],
+            ['17:30','莫尔道嘎出发赴室韦：导航依次添加途经点 太平林场 → 老鹰嘴 → 临江 → 界河观景点，终点室韦；沿途林海秋色，随走随停拍照'],
+            ['18:50','抵达室韦苏木，办理入住（额尔古纳室韦风景酒店）']],
+  spots:[{tag:'路过打卡',name:'根河 · 冷极广场 / 冷极温度计',
+          facts:['根河号称“中国冷极”，广场与温度计标志是标准打卡位，免费',
+                 '路边停车即拍，20–30 分钟足够，不必专门排队']},
+         {tag:'必去',name:'敖鲁古雅使鹿部落景区',
+          facts:['不用买观光车票：从入口步行约 300–400m 即到原始部落',
+                 '驯鹿不能摸它的角——会痒（只看不摸，尊重动物）',
+                 '演出场次多，进园先看时间表再定动线；按本行程 10:45 入园，可赶上 11:15 场《敖鲁古雅风情》'],
+          perf:{title:'演出时间表（现场公示）',
+                note:'演出受天气影响可能临时取消或调整，请以现场公告为准；后期场次可能根据季节及客流增减，恕不另行通知。',
+                rows:[['《萨满舞》祈福演艺','09:10–09:40、15:00–15:28','28 分钟','萨满演艺剧场（原始部落内）'],
+                      ['《敖鲁古雅风情》','10:15–10:47、11:15–11:47、16:15–16:47','32 分钟','沉浸式演艺剧场（原始部落鹿苑旁）']]}},
+         {tag:'二选一',name:'莫尔道嘎国家森林公园',
+          facts:['总面积 148,324 公顷（约 1,483 km²），公园超大，别妄想步行逛完',
+                 '景区内部无观光大巴，必须自己开车进入；只有买大门票才能自驾进入景区主线'],
+          routes:[{label:'自驾路线 · 全程单行道，无需走回头路',
+                   stations:['景区大门','红豆坡','鹿道','一目九岭','使鹿部落','冰上森林','景区出口'],
+                   facts:['全程约 33km，建议预留 4–5 小时（含沿途停车游玩）',
+                          '路况良好、全程柏油铺装，沿途多处停车点，可随走随停']},
+                  {label:'小火车路线 · 独立闭环，与自驾线不互通',
+                   stations:['始发站','樟子松林站','花园林海站','林溪水畔站','森林牧场站','始发站'],
+                   facts:['每站停靠 5–15 分钟；建议每站都下车游玩，等下一趟车再前往下一站',
+                          '纯车程约 1.5 小时；含逐站下车游览，全程约 3 小时']}],
+          opts:{caption:'园内是两套完全独立的游览系统，对应两种票——不用硬买套票',
+                items:[{tag:'方案A · 只坐小火车',name:'只买小火车票',price:'闲鱼 85 元/人',
+                        bullets:['独立闭环线路，与自驾景区完全不互通',
+                                 '全程 9.8km，4 个停靠站；纯车程约 1.5 小时',
+                                 '每站停靠 5–15 分钟，建议每站下车、等下一趟车，全程约 3 小时',
+                                 '适合：不想开车、带老人小孩、轻松休闲逛森林',
+                                 '到不了一目九岭、白鹿岛，仅游玩景区入口附近区域']},
+                       {tag:'方案B · 深入核心',name:'大门票 + 小火车套票',price:'闲鱼 45 / 110 元/人',
+                        bullets:['只有买大门票才能自驾进入景区主线',
+                                 '自驾主线约 33km，打卡一目九岭、使鹿部落等深处核心景点',
+                                 '单行道无需走回头路，但建议预留 4–5 小时',
+                                 '适合：自驾出行、想深度打卡整个森林公园']}],
+                chan:{title:'🎫 购票渠道 · 闲鱼买更划算（官方线上价对比）',
+                      head:['票种','线上参考','闲鱼价'],
+                      rows:[['自驾门票（大门票）','约 95 元','45 元/人'],
+                            ['森林小火车票（独立闭环）','约 100 元','85 元/人'],
+                            ['自驾 + 火车 套票','约 150 元','110 元/人']],
+                      note:'闲鱼下单前先确认票种、是否需要实名；优先选「景区验证后再确认收货」的卖家，避免出票后无法入园。'},
+                tips:['只想体验小火车，直接单买小火车票即可，不用买大门票 / 套票，别被套票捆绑消费',
+                      '小火车线 ≠ 自驾线，两条线路互不连通——不要以为坐完小火车就能去一目九岭、白鹿岛',
+                      '白鹿岛在景区最深处，往返车程非常远；购买门票即可自驾进入，车辆不另收费。景区道路为单行道，路况良好、全程柏油铺装，沿途多处停车点，可随走随停']}},
+         {tag:'返程路线',name:'莫尔道嘎 → 室韦 · 出园自驾',
+          facts:['出园后按下列顺序在导航里依次添加途经点，终点设为室韦'],
+          routes:[{label:'导航途经点 · 依次设置',
+                   stations:['太平林场','老鹰嘴','临江','界河观景点','室韦']}]}],
   strolls:[{tag:'必体验',name:'室韦风情主街',desc:'小镇不大步行即可：彩色木刻楞房屋、俄式商品店、列巴房，买蓝莓酱和列巴，慢慢逛 40–60 分钟。'},
            {tag:'必体验',name:'界河广场 / 口岸观景台',desc:'看额尔古纳河，隔河眺望俄罗斯村庄奥洛契，看边境日落、吹晚风。'},
            {tag:'可选付费',name:'界河游船',desc:'时间紧张可以不坐。'}],
   meal:'俄式餐、列巴、红菜汤、炖菜',
-  lodging:'室韦木刻楞民宿（务必确认供暖）',
-  notes:['⚠️ 室韦住宿条件有限，旺季务必提前订房','坚决不开夜路']},
+  eats:['牧民的日常蒙古茶餐厅','鸿英烧烤','隔壁老王地方菜烧烤','原味乡'],
+  lodging:'<b class="hn">额尔古纳室韦风景酒店</b><span class="hnsub">室韦苏木 · 木刻楞风格，入住前与店家确认供暖</span>',
+  notes:['⏱ 当天约 443km / 纯驾驶约 7h21m，叠加两个景区后总时长很紧：按 06:30 出发估算，到室韦约 18:50，末段接近天黑，务必早发',
+         '⚠️ 莫尔道嘎当天只留了 15:50–17:30（约 1h40m）：小火车逐站下车约 3h、自驾主线建议 4–5h，都放不下——当天只够坐一趟小火车看森林（基本不下车）或门口打卡；想深度玩须舍弃莫尔道嘎、或改住一晚',
+         '⚠️ 室韦住宿条件有限，已订风景酒店；入住前确认供暖',
+         '坚决不开夜路']},
  {n:3,date:'9月27日',color:'#94842f',title:'室韦 → 卡线 X904 → 黑山头 → 额尔古纳',
-  km:'约230km',drive:'3.5–4.5h + 1h',stayPill:'住·额尔古纳',stayShort:'额尔古纳',
-  route:['室韦','九卡–八卡–七卡–五卡（卡线）','黑山头','额尔古纳（拉布大林）'],
-  road:'卡线约 160km 边走边玩 3.5–4.5h；黑山头 → 额尔古纳约 70km · 1h',
+  stayPill:'住·如家华驿精选酒店',stayShort:'额尔古纳',
+  hotel:'额尔古纳 · 如家华驿精选酒店',hotelNote:'拉布大林市区 · 市政府周边',
+  route:['室韦','九卡–八卡–七卡–五卡（卡线 X904）','黑山头','额尔古纳（拉布大林）'],
+  road:'卡线 X904（904 县道）约 160km · 边走边玩 3.5–4.5h；黑山头 → 额尔古纳约 70km · 1h',
   schedule:[['07:30','室韦出发上卡线，沿途界河、河谷、白桦林；9 卡、7 卡观景台停车拍照'],
             ['11:30','抵达黑山头镇，简单午餐；可登黑山头日落山（今天不看日落，路过打卡即可）'],
             ['13:00','离开黑山头，前往额尔古纳市区'],
-            ['14:00','抵达额尔古纳市政府附近酒店，办理入住，短暂休整']],
+            ['14:00','抵达额尔古纳市区，入住如家华驿精选酒店，短暂休整']],
+  spots:[{tag:'必读',name:'卡线 X904 · 边境公路玩法与通行提醒',
+        facts:['卡线就是 X904（904 县道）——沿额尔古纳河（中俄界河）的边境公路，今天最精华的一段',
+               '路上有多个观景台（九卡、八卡、七卡、五卡），可随停随拍',
+               '🚧 卡线会堵车：热门线 + 沿河单线通行，旺季 / 秋季车流集中，务必给当天留出缓冲时间',
+               '🚫 别把车开进路边的私人草场：草场归牧民，随意驶入会被拦下收费（不给钱走不了）；观景拍照请停在路边停车点或观景台',
+               '📷 全程区间测速：严格按限速标志行驶，别抱侥幸'],
+        routes:[{label:'常规路线 · 室韦 → 黑山头（沿界河）',
+                 stations:['室韦','九卡','八卡','七卡','五卡','黑山头'],
+                 facts:['约 160km · 边走边玩 3.5–4.5h',
+                        '七卡附近有加油站；全程正常驾驶油耗足够，无需专程找油站']},
+                {label:'封路绕行 ·「室韦 → 九卡」封闭时改走',
+                 stations:['室韦','恩和','七卡','五卡','黑山头'],
+                 facts:['室韦 → 恩和 → 七卡 约 114km；之后从七卡接回卡线，继续原路线往黑山头 / 额尔古纳']}]}],
   strolls:[{tag:'可选',name:'哈萨尔广场',desc:'市区中心，散步看小城街景。'},
            {tag:'可选',name:'市区商业街',desc:'采购牛肉干、奶皮子等特产。'},
            {tag:'可选',name:'根河岸边步道',desc:'体力尚可的话短途开车过去，河边散步看秋景。'}],
   meal:'本地蒙餐：手把肉、锅茶',
-  lodging:'额尔古纳市区（拉布大林，市政府周边，酒店选择多，供暖完善）',
-  notes:['⚠️ 风险：卡线偶有夜间施工，白天通行；如遇临时封闭，绕行 G331 经恩和到黑山头','✅ 卡线沿途几乎没有餐馆，自带零食和饮用水','哈乌尔河景区距离市区较远，时间不够直接放弃']},
+  lodging:'<b class="hn">额尔古纳 · 如家华驿精选酒店</b><span class="hnsub">拉布大林市区 · 市政府周边，供暖完善</span>',
+  notes:['⚠️ 若「室韦 → 九卡」段封路：改走绕行线 室韦 → 恩和 → 七卡（约 114km），从七卡接回卡线继续往黑山头 / 额尔古纳；九卡、八卡两个观景台需跳过',
+         '🚫 卡线（X904 / 904 县道）全程禁飞无人机：属边境管理区，严禁起飞航拍',
+         '✅ 卡线沿途几乎没有餐馆，自带零食和饮用水',
+         '哈乌尔河景区距离市区较远，时间不够直接放弃']},
  {n:4,date:'9月28日',color:'#b98a2b',title:'额尔古纳 → 湿地 → 莫日格勒河 → 海拉尔',
-  km:'约180km',drive:'约3h',stayPill:'住·海拉尔',stayShort:'海拉尔',
+  stayPill:'住·汉庭呼伦贝尔市政府万达广场酒店',stayShort:'海拉尔',
+  hotel:'汉庭呼伦贝尔市政府万达广场酒店',hotelNote:'海拉尔市区 · 万达广场一带',
   route:['额尔古纳市区','额尔古纳国家湿地公园','莫日格勒河','海拉尔'],road:'全程约 3h · 节奏轻松',
   schedule:[['08:00','出发前往额尔古纳国家湿地公园，游玩 2–2.5h，登高看根河湿地全景'],
             ['11:00','返回市区附近午餐'],
@@ -358,10 +533,11 @@ var DAYS=[
   strolls:[{tag:'强烈推荐',name:'呼伦贝尔古城（海拉尔古城）',desc:'免费；傍晚 18 点后灯笼亮起氛围最好。北城门打卡、步行街逛文创小吃，1–2 小时，不进收费展馆也很好看。'},
            {tag:'备选',name:'成吉思汗广场',desc:'城市大广场，散步；离古城不远，可与古城串联一起逛。'}],
   meal:'地道蒙餐：烤羊腿、奶茶',
-  lodging:'海拉尔市区',
+  lodging:'<b class="hn">汉庭呼伦贝尔市政府万达广场酒店</b><span class="hnsub">海拉尔市区 · 万达广场一带，逛街吃饭便利</span>',
   notes:['莫日格勒河周边加油站少，出发前把油加满']},
  {n:5,date:'9月29日',color:'#c0722a',title:'海拉尔 → 阿尔山',
-  km:'约280km',drive:'4–4.5h',stayPill:'住·阿尔山',stayShort:'阿尔山',
+  stayPill:'住·阿尔山艾诺尔宾馆',stayShort:'阿尔山',
+  hotel:'阿尔山艾诺尔宾馆',hotelNote:'连住 9.29–9.30 两晚 · 温泉街一带',
   route:['海拉尔','伊敏','罕达盖','阿尔山市'],road:'国道 + 部分省道 · 草原森林过渡风光',
   schedule:[['08:30','海拉尔出发，沿途草原秋色，随走随停'],
             ['12:00','途中小镇午餐'],
@@ -371,10 +547,11 @@ var DAYS=[
            {tag:'可选',name:'温泉街彩色木屋街区',desc:'漫步小城街道，马卡龙色小房子、俄式小店，人少很治愈。'},
            {tag:'可选',name:'哈拉哈河滨河步道',desc:'沿河边木栈道散步，看小城河景。'}],
   meal:'阿尔山本地铁锅炖、山野菜',
-  lodging:'阿尔山市区温泉街一带，酒店多，性价比高于景区',
+  lodging:'<b class="hn">阿尔山艾诺尔宾馆</b><span class="hnsub">温泉街一带 · 连住 9.29–9.30 两晚，性价比高于景区</span>',
   notes:['阿尔山市区海拔高，9 月底夜间接近 0℃，注意保暖','温泉街周边闲逛点均免门票']},
  {n:6,date:'9月30日',color:'#ae5430',title:'阿尔山国家森林公园 · 全天',
-  km:'约140km（往返）',drive:'往返各约 1h',stayPill:'住·阿尔山（连住）',stayShort:'阿尔山（连住）',
+  stayPill:'住·阿尔山艾诺尔宾馆（连住）',stayShort:'阿尔山（连住）',
+  hotel:'阿尔山艾诺尔宾馆',hotelNote:'连住第 2 晚 · 无需换房、无需搬行李',
   route:['阿尔山市区','森林公园（往返约 70km）','阿尔山市区'],road:'森林公园距市区约 70km · 车程约 1h',
   schedule:[['07:30','阿尔山市区出发，前往阿尔山国家森林公园大门'],
             ['08:30','入园换乘景区观光车，游玩核心点位：三潭峡、石塘林、阿尔山天池、杜鹃湖、不冻河'],
@@ -382,10 +559,11 @@ var DAYS=[
   strolls:[{tag:'可选',name:'泡温泉',desc:'温泉街有很多温泉酒店，可选消费。'},
            {tag:'可选',name:'温泉街夜散步',desc:'不想泡温泉，就在温泉街夜晚散步，小城灯光安静舒服。'}],
   meal:'景区内用餐少，建议回市区解决',
-  lodging:'继续住阿尔山市区',
+  lodging:'<b class="hn">阿尔山艾诺尔宾馆</b><span class="hnsub">连住第 2 晚 · 无需换房、无需搬行李</span>',
   notes:['门票 2 天有效，必须坐景区区间车，建议早进园','景区内吃饭选择少，自带干粮、热水','园内气温比市区更低，务必厚外套']},
  {n:7,date:'10月1日',color:'#94463a',title:'阿尔山 → 乌兰浩特',
-  km:'约270km',drive:'3.5–4h',stayPill:'住·乌兰浩特',stayShort:'乌兰浩特',
+  stayPill:'住·如家精选酒店（合展中学店）',stayShort:'乌兰浩特',
+  hotel:'如家精选酒店（乌兰浩特合展中学店）',hotelNote:'乌兰浩特市区',
   route:['阿尔山','乌兰浩特'],road:'国道，路况良好',
   schedule:[['09:00','阿尔山市区出发，沿途山林草原风光'],
             ['12:30','抵达乌兰浩特，午餐，办理入住']],
@@ -393,10 +571,10 @@ var DAYS=[
            {tag:'方案B · 休闲',name:'兴安盟博物馆',desc:'了解科尔沁历史，免费。'},
            {tag:'夜晚',name:'五一广场 / 铁西夜市',desc:'逛本地夜市，吃小吃、蒙古馅饼、羊肉串，感受小城烟火气。'}],
   meal:'蒙餐、牛肉火锅',
-  lodging:'乌兰浩特市区',
+  lodging:'<b class="hn">如家精选酒店（乌兰浩特合展中学店）</b><span class="hnsub">乌兰浩特市区</span>',
   notes:['方案 A / B 按兴趣与体力二选一即可']},
  {n:8,date:'10月2日',color:'#46647a',title:'乌兰浩特 → 哈尔滨',
-  km:'约460km',drive:'5.5–6h',stayPill:'当晚到家',stayShort:'—（返哈）',
+  stayPill:'当晚到家',stayShort:'—（返哈）',
   route:['乌兰浩特','哈尔滨'],road:'全程高速',
   schedule:[['07:30','乌兰浩特出发返程，高速服务区分段休息'],
             ['13:30–14:00','回到哈尔滨，行程结束']],
@@ -406,32 +584,56 @@ var DAYS=[
   notes:['高速服务区分段休息，避免疲劳驾驶']}
 ];
 
+/* 逐日里程的唯一数字源：km=里程 / drive=车程文案 / h=纯车程小时（区间取中值）
+   / note=里程条图补充说明 / kmSuffix=里程后缀（如「（往返）」）。改里程只需改这里。 */
 var CHART=[
- {n:1,km:580,v:'≈580km · 6.5–7h · 高速+国道'},
- {n:2,km:410,v:'≈410km · 6.5–7h · G332 林区山路'},
- {n:3,km:230,v:'≈230km · 卡线160 + 70'},
- {n:4,km:180,v:'≈180km · 约3h · 轻松日'},
- {n:5,km:280,v:'≈280km · 4–4.5h'},
- {n:6,km:140,v:'≈140km · 景区往返'},
- {n:7,km:270,v:'≈270km · 3.5–4h'},
- {n:8,km:460,v:'≈460km · 5.5–6h · 全高速'}
+ {n:1,km:580,drive:'6.5–7h',h:6.75,note:'高速+国道'},
+ {n:2,km:443,drive:'约 7h21m',h:7.35,note:'G332 林区山路'},
+ {n:3,km:230,drive:'3.5–4.5h + 1h',h:5,note:'卡线160 + 70',noDrive:true},
+ {n:4,km:180,drive:'约3h',h:3,note:'轻松日'},
+ {n:5,km:317,drive:'4.5–5h',h:4.75,note:''},
+ {n:6,km:140,drive:'往返各约 1h',h:2,note:'',kmSuffix:'（往返）'},
+ {n:7,km:270,drive:'3.5–4h',h:3.75,note:''},
+ {n:8,km:460,drive:'5.5–6h',h:5.75,note:'全高速'}
 ];
+
+/* ================= 派生：以 CHART 为唯一数字源，回填所有展示位 =================
+   覆盖 ① DAYS 的 km/drive/driveH ② 里程条图文案 ③ 总里程 / 单日最长
+   ④ 页首副标题、页眉「单日最长」、里程图注中的数字（静态 HTML 占位符） */
+var KM_SUM=0,KM_MAX=0,KM_MAX_N=0;
+CHART.forEach(function(c){
+  if(c.km>KM_MAX){KM_MAX=c.km;KM_MAX_N=c.n}
+  KM_SUM+=c.km;
+  c.v='≈'+c.km+'km'+(!c.noDrive&&c.drive?' · '+c.drive:'')+(c.note?' · '+c.note:'');  /* 里程条图右侧文案 */
+  c.kmTxt='约'+c.km+'km'+(c.kmSuffix||'');                                /* 一览表 / 日卡 / 图例 */
+  DAYS.forEach(function(d){if(d.n===c.n){d.km=c.kmTxt;d.drive=c.drive;d.driveH=c.h}});
+});
+(function(){
+  var d6=CHART.filter(function(c){return c.n===6})[0];
+  function set(id,txt){var e=document.getElementById(id);if(e){e.textContent=txt}}
+  set('heroTot',KM_SUM.toLocaleString());
+  set('metaMax',KM_MAX);
+  set('noteD6',d6?d6.km:'');
+  set('noteTot',KM_SUM.toLocaleString());
+})();
 
 var WARNS=[
  ['🪪 身份证随身','卡线 X904 边防公路检查站随机查验，全程随身携带。'],
  ['🚫 禁飞无人机','边境地区禁止飞无人机，不要拍摄边防哨所。'],
  ['🔥 林区防火期','进山备好灭火器，建议办理纸质防火证。'],
  ['🗺 离线地图','内蒙古很多路段无手机信号，提前下载离线地图。'],
- ['⛽ 油箱规则','油表过半就加满油；莫日格勒河、卡线周边加油站极少。'],
+ ['⛽ 油箱规则','油表过半就加满油；卡线约 160km、七卡有加油站，正常驾驶油耗足够；莫日格勒河一带加油站极少。'],
  ['🧥 防寒装备','早晚 0–5℃、可能遇初雪，务必带薄羽绒服或冲锋衣。']
 ];
 
 var CK=[
  {g:'证件卡照',items:['身份证（卡线检查站随时查验）','驾驶证、行驶证','车辆保险单 / 随车证件']},
  {g:'保暖衣物',items:['薄羽绒服','冲锋衣 + 抓绒','保暖内衣、厚袜子','帽子、手套、围巾','暖宝宝']},
- {g:'车辆装备',items:['灭火器（进山必备）','防冻型玻璃水','备胎 / 补胎工具','出发前保养与胎压检查']},
+ {g:'车辆装备',items:['灭火器（进山必备）','备胎 / 补胎工具','出发前保养与胎压检查']},
  {g:'电子导航',items:['内蒙古离线地图（提前下载）','车充、充电宝','行车记录仪']},
- {g:'饮食药品',items:['保温杯','高热量零食、饮用水','常用药品、晕车药','墨镜（草原阳光强）']}
+ {g:'饮食药品',items:['保温杯','高热量零食','常用药品、晕车药','墨镜（草原阳光强）']},
+ {g:'应急',items:['便携手电','玻璃水（防冻型）','汽车防虫网','口罩']},
+ {g:'吃喝',items:['自热米饭','矿泉水']}
 ];
 
 /* 地图：停靠点与逐日折线（经纬度近似，示意图） */
@@ -469,33 +671,65 @@ function el(t,a,p){var e=document.createElementNS(NS,t);for(var k in a){e.setAtt
 function dayOf(n){for(var i=0;i<DAYS.length;i++){if(DAYS[i].n===n){return DAYS[i]}}return DAYS[0]}
 function go(id){var e=$(id);if(e){e.scrollIntoView({behavior:'smooth',block:'start'})}}
 
-/* ================= 全程脉络条 ================= */
+/* ================= 全程脉络条（蛇形回转：上行左→右，回转下行右→左） ================= */
 (function(){
   var nodes=[
-    {name:'哈尔滨',sub:'9.25 出发 · 10.2 归',col:'#26301f'},
-    {name:'加格达奇',sub:'9.25 晚',col:'#2f6b4a'},
-    {name:'室韦',sub:'9.26 晚',col:'#5f7f3e'},
-    {name:'额尔古纳',sub:'9.27 晚',col:'#94842f'},
-    {name:'海拉尔',sub:'9.28 晚',col:'#b98a2b'},
-    {name:'阿尔山',sub:'9.29–30 两晚 · 森林公园往返140km',col:'#c0722a'},
-    {name:'乌兰浩特',sub:'10.1 晚',col:'#94463a'},
-    {name:'哈尔滨',sub:'10.2 到家',col:'#46647a'}
+    {name:'哈尔滨',sub:'D1 出发 · 9.25',col:'#26301f'},
+    {name:'加格达奇',sub:'D1 晚 · 9.25',col:'#2f6b4a'},
+    {name:'室韦',sub:'D2 晚 · 9.26',col:'#5f7f3e'},
+    {name:'额尔古纳',sub:'D3 晚 · 9.27',col:'#94842f'},
+    {name:'海拉尔',sub:'D4 晚 · 9.28',col:'#b98a2b'},
+    {name:'阿尔山',sub:'D5–D6 连住 · 9.29–30',col:'#c0722a'},
+    {name:'乌兰浩特',sub:'D7 晚 · 10.1',col:'#94463a'},
+    {name:'哈尔滨',sub:'D8 到家 · 10.2',col:'#46647a'}
   ];
-  var kms=['D1 · 580km','D2 · 410km','D3 · 230km','D4 · 180km','D5 · 280km','D7 · 270km','D8 · 460km'];
-  var h='';
-  nodes.forEach(function(nd,i){
-    h+='<div class="rbnode"><i style="border-color:'+nd.col+'"></i><b>'+nd.name+'</b><span>'+nd.sub+'</span></div>';
-    if(i<kms.length){h+='<div class="rbseg"><em>'+kms[i]+'</em><u></u></div>'}
-  });
-  $('ribbon').innerHTML=h;
+  /* 段里程标签直接取自 CHART，避免重复维护（跳过多住一晚、不产生新节点的 D6） */
+  var kms=CHART.filter(function(c){return c.n!==6}).map(function(c){return 'D'+c.n+' · '+c.km+'km'});
+  var CUT=4;  /* 每行节点数：4 + 4 */
+
+  function nodeHtml(nd){
+    return '<div class="rbnode"><i style="border-color:'+nd.col+'"></i><b>'+nd.name+'</b><span>'+nd.sub+'</span></div>';
+  }
+  function segHtml(i){
+    return '<div class="rbseg"><em>'+kms[i]+'</em><u></u></div>';
+  }
+
+  var h='<div class="rb">';
+  for(var i=0;i<CUT;i++){
+    h+=nodeHtml(nodes[i]);
+    if(i<CUT-1){h+=segHtml(i)}
+  }
+  h+='</div>';
+
+  /* 回转：与末节点严格等宽的对齐盒，箭头正对上下两行末节点的圆点 */
+  h+='<div class="rbturn">'
+   +   '<div class="tspacer"></div>'
+   +   '<div class="tcurve">'
+   +     '<svg viewBox="0 0 330 60" aria-hidden="true">'
+   +       '<text x="228" y="22" text-anchor="end">回转下行 · '+kms[CUT-1]+' · 额尔古纳 → 海拉尔</text>'
+   +       '<path d="M236,18.5 H304 A26,26 0 0 1 330,44.5" fill="none" stroke="#c9b98d" stroke-width="2" stroke-linecap="round"/>'
+   +       '<path d="M323,43 L337,43 L330,53 Z" fill="#c9b98d"/>'
+   +     '</svg>'
+   +   '</div>'
+   +   '<span class="tmob">回转下行 · '+kms[CUT-1]+' · 额尔古纳 → 海拉尔</span>'
+   + '</div>';
+
+  var h2='<div class="rb rev">';
+  for(var j=nodes.length-1;j>=CUT;j--){
+    h2+=nodeHtml(nodes[j]);
+    if(j>CUT){h2+=segHtml(j-1)}
+  }
+  h2+='</div>';
+
+  $('ribbon').innerHTML=h+h2;
 })();
 
 /* ================= 统计卡 / 提醒卡 ================= */
 (function(){
   var stats=[
-    ['约 3,450 km','总里程（含绕行）'],
+    ['约 '+KM_SUM.toLocaleString()+' km','总里程（逐日合计）'],
     ['8 天 7 晚','9.25 – 10.2'],
-    ['约 580 km','单日最长（D1）'],
+    ['约 '+KM_MAX+' km','单日最长（D'+KM_MAX_N+'）'],
     ['0 – 18 ℃','昼夜温差（早晚0–5）'],
     ['约 51.5°N','纬度最高（室韦）'],
     ['可能初雪','9月末–10月初秋色窗口']
@@ -512,15 +746,37 @@ function go(id){var e=$(id);if(e){e.scrollIntoView({behavior:'smooth',block:'sta
       +'</td><td>'+d.title+'</td><td>'+d.km+'</td><td>'+d.drive+'</td><td>'+d.stayShort+'</td></tr>';
   });
   h+='</tbody>';
+  var kmSum=0,hSum=0;
+  CHART.forEach(function(c){kmSum+=c.km});
+  DAYS.forEach(function(d){hSum+=(d.driveH||0)});
+  h+='<tfoot><tr><td colspan="3">合计 · 8 天</td><td>约 '+kmSum.toLocaleString()+' km</td><td>约 '+Math.round(hSum)+' h</td><td>—</td></tr></tfoot>';
   $('ovtbl').innerHTML=h;
   $('ovtbl').querySelectorAll('tr[data-day]').forEach(function(tr){
     tr.addEventListener('click',function(){go('day'+tr.getAttribute('data-day'))});
   });
 })();
 
+/* ================= 住宿一览表 ================= */
+(function(){
+  var h='<thead><tr><th>晚</th><th>日期</th><th>城市</th><th>酒店</th><th>备注</th></tr></thead><tbody>';
+  DAYS.forEach(function(d){
+    if(!d.hotel){return}
+    h+='<tr data-day="'+d.n+'"><td><i class="dotc" style="background:'+d.color+'"></i>D'+d.n+'</td><td>'+d.date
+      +'</td><td>'+d.stayShort+'</td><td class="stayname">'+d.hotel+'</td><td class="staynote">'+(d.hotelNote||'—')+'</td></tr>';
+  });
+  h+='</tbody>';
+  $('staytbl').innerHTML=h;
+  $('staytbl').querySelectorAll('tr[data-day]').forEach(function(tr){
+    var n=+tr.getAttribute('data-day');
+    tr.addEventListener('click',function(){go('day'+n)});
+    tr.addEventListener('mouseenter',function(){highlight(n)});
+    tr.addEventListener('mouseleave',function(){highlight(null)});
+  });
+})();
+
 /* ================= 里程图表 ================= */
 (function(){
-  var max=580;
+  var max=KM_MAX;   /* 条长比例基准由 CHART 派生，勿硬编码 */
   $('chart').innerHTML=CHART.map(function(c){
     var d=dayOf(c.n);
     return '<div class="crow" data-day="'+c.n+'"><span class="clabel">D'+c.n+' · '
@@ -539,9 +795,11 @@ function go(id){var e=$(id);if(e){e.scrollIntoView({behavior:'smooth',block:'sta
 /* ================= 每日卡片 ================= */
 (function(){
   function tagCls(t){
-    if(t==='必体验')return 't-must';
+    if(t==='必体验'||t==='必读')return 't-must';
     if(t==='强烈推荐')return 't-rec';
+    if(t==='必去')return 't-rec';
     if(t==='可选付费')return 't-pay';
+    if(t==='二选一')return 't-plan';
     if(t.indexOf('方案')===0||t==='夜晚')return 't-plan';
     return 't-opt';
   }
@@ -551,6 +809,48 @@ function go(id){var e=$(id);if(e){e.scrollIntoView({behavior:'smooth',block:'sta
       return '<div class="stroll"><span class="tag '+tagCls(s.tag)+'">'+s.tag+'</span><b>'+s.name+'</b><p>'+s.desc+'</p></div>';
     }).join('');
     var notes=(d.notes||[]).map(function(n){return '<li>'+n+'</li>'}).join('');
+    var eats=(d.eats||[]).map(function(x){return '<span>'+x+'</span>'}).join('');
+    /* 沿途重点：景区/打卡点，可带演出时间表（perf）与二选一票务（opts） */
+    var spots=(d.spots||[]).map(function(s){
+      var h='<div class="spot"><div class="sphead"><span class="tag '+tagCls(s.tag)+'">'+s.tag+'</span><b>'+s.name+'</b></div>';
+      if(s.facts&&s.facts.length){h+='<ul class="facts">'+s.facts.map(function(f){return '<li>'+f+'</li>'}).join('')+'</ul>'}
+      if(s.perf){
+        var PC=['剧目','场次','时长','演出地点'];
+        h+='<div class="perf"><h6>'+s.perf.title+'</h6><table class="ptbl"><thead><tr>'
+          +PC.map(function(t){return '<th>'+t+'</th>'}).join('')+'</tr></thead><tbody>'
+          +s.perf.rows.map(function(r){return '<tr>'+r.map(function(c,i){return '<td data-l="'+PC[i]+'">'+c+'</td>'}).join('')+'</tr>'}).join('')
+          +'</tbody></table>'+(s.perf.note?'<p class="pnote">'+s.perf.note+'</p>':'')+'</div>';
+      }
+      if(s.routes&&s.routes.length){
+        h+='<div class="routes">'+s.routes.map(function(r){
+          return '<div class="route"><h6>'+r.label+'</h6><div class="rstns">'
+            +r.stations.map(function(st,i){return (i?'<i class="rarw">&#9656;</i>':'')+'<span class="rstn">'+st+'</span>'}).join('')
+            +'</div>'+(r.facts&&r.facts.length?'<ul class="rf">'+r.facts.map(function(f){return '<li>'+f+'</li>'}).join('')+'</ul>':'')+'</div>';
+        }).join('')+'</div>';
+      }
+      if(s.opts){
+        h+='<p class="optcap">'+s.opts.caption+'</p><div class="opts">'
+          +s.opts.items.map(function(o){
+            return '<div class="opt"><div class="oh"><span class="tag '+tagCls(o.tag)+'">'+o.tag+'</span><b>'+o.name+'</b>'
+              +(o.price?'<span class="price">'+o.price+'</span>':'')+'</div><ul>'
+              +o.bullets.map(function(b){return '<li>'+b+'</li>'}).join('')+'</ul></div>';
+          }).join('')+'</div>';
+        if(s.opts.chan){
+          var cn=s.opts.chan;
+          h+='<div class="chan"><h6>'+cn.title+'</h6><table><thead><tr>'
+            +cn.head.map(function(x,i){return '<th'+(i===cn.head.length-1?' style="color:#a8442f"':'')+'>'+x+'</th>'}).join('')
+            +'</tr></thead><tbody>'
+            +cn.rows.map(function(r){return '<tr>'+r.map(function(c,i){
+                return '<td class="'+(i===r.length-1?'cy':i===r.length-2?'cref':'')+'">'+c+'</td>';
+              }).join('')+'</tr>'}).join('')
+            +'</tbody></table>'+(cn.note?'<p class="cnote">'+cn.note+'</p>':'')+'</div>';
+        }
+        if(s.opts.tips&&s.opts.tips.length){
+          h+='<div class="optnote"><h6>⚠️ 避坑提醒</h6><ul>'+s.opts.tips.map(function(t){return '<li>'+t+'</li>'}).join('')+'</ul></div>';
+        }
+      }
+      return h+'</div>';
+    }).join('');
     var flow=d.route.map(function(r){return '<span>'+r+'</span>'}).join('<i>→</i>');
     return '<article class="day" id="day'+d.n+'" style="--c:'+d.color+'">'
       +'<div class="dhead"><span class="dnum">Day '+d.n+'</span><span class="ddate">'+d.date+'</span>'
@@ -559,8 +859,11 @@ function go(id){var e=$(id);if(e){e.scrollIntoView({behavior:'smooth',block:'sta
       +'<p class="flow">'+flow+'</p>'
       +(d.road?'<p class="road">🛣 '+d.road+'</p>':'')
       +'<div class="sub"><h5>⏳ 时间安排</h5><ul class="sch">'+sch+'</ul></div>'
+      +(spots?'<div class="sub"><h5>🎫 沿途重点：门票 · 玩法 · 打卡</h5><div class="spots">'+spots+'</div></div>':'')
       +(st?'<div class="sub"><h5>🚶‍♂️ 住宿地附近闲逛（可选，累了就跳过）</h5><div class="strolls">'+st+'</div></div>':'')
-      +'<div class="duo"><div><h5>🍽 餐饮</h5><p>'+d.meal+'</p></div><div><h5>🛏 住宿</h5><p>'+d.lodging+'</p></div></div>'
+      +'<div class="duo"><div><h5>🍽 餐饮</h5><p>'+d.meal+'</p>'
+      +(eats?'<div class="eats"><em>'+(d.eatsLabel||'本地小店')+'</em>'+eats+'</div>':'')
+      +'</div><div><h5>🛏 住宿</h5><p>'+d.lodging+'</p></div></div>'
       +(notes?'<div class="notes"><ul>'+notes+'</ul></div>':'')
       +'</article>';
   }).join('');
@@ -672,28 +975,27 @@ function highlight(n){
 
 /* ================= 行前清单 ================= */
 (function(){
-  var KEY='bjq_ck_v1',saved=[];
+  /* 勾选状态按「条目文本」保存（不再用位置索引），以后增删条目不会让已有勾选错位 */
+  var KEY='bjq_ck_v2',saved=[];
   try{saved=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(err){saved=[]}
-  var total=0,idx=0;
+  var total=0;
   $('ckgroups').innerHTML=CK.map(function(g){
     var h='<div class="ckg"><h4>'+g.g+'</h4>';
     g.items.forEach(function(it){
-      var i=idx++;total++;
-      h+='<label data-i="'+i+'"><input type="checkbox"'+(saved.indexOf(i)>=0?' checked':'')+'><span>'+it+'</span></label>';
+      total++;
+      h+='<label><input type="checkbox"'+(saved.indexOf(it)>=0?' checked':'')+'><span>'+it+'</span></label>';
     });
     return h+'</div>';
   }).join('');
   function refresh(){
-    var done=0;
+    var done=0,on=[];
     $('ckgroups').querySelectorAll('label').forEach(function(lb){
-      var on=lb.querySelector('input').checked;
-      lb.classList.toggle('done',on);
-      if(on){done++}
+      var c=lb.querySelector('input').checked;
+      lb.classList.toggle('done',c);
+      if(c){done++;on.push(lb.querySelector('span').textContent)}
     });
     $('ckCount').textContent=done+' / '+total+' 项';
-    try{localStorage.setItem(KEY,JSON.stringify(
-      Array.prototype.map.call($('ckgroups').querySelectorAll('input'),function(c,i){return c.checked?i:-1}).filter(function(i){return i>=0})
-    ))}catch(err){}
+    try{localStorage.setItem(KEY,JSON.stringify(on))}catch(err){}
   }
   $('ckgroups').addEventListener('change',refresh);
   refresh();
