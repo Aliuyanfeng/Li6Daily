@@ -78,22 +78,38 @@ h2::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,#d9cba6,
 .rbturn .tmob{display:none}
 
 @media(max-width:720px){
-  .rb{flex-direction:column;padding:0}
-  .rb.rev{flex-direction:column-reverse}
-  .rbnode{display:grid;grid-template-columns:22px 1fr;column-gap:10px;text-align:left;position:relative}
-  .rbnode i{margin:4px auto 0;align-self:start}
-  .rbnode b,.rbnode span{grid-column:2}
-  .rbnode::before{content:'';position:absolute;left:10px;top:11px;bottom:0;width:2px;background:#c9b98d}
-  .rb.rev .rbnode:first-child::before{display:none}
-  .rbseg{display:grid;grid-template-columns:22px 1fr;column-gap:10px;align-items:center;min-height:38px;padding:0}
-  .rbseg u{display:none}
-  .rbseg::before{content:'';grid-column:1;grid-row:1;justify-self:center;width:2px;height:100%;background:#c9b98d}
-  .rbseg em{margin:0;grid-column:2;white-space:normal}
-  /* 窄屏：回转段退化为普通「段」行，保证 D4 里程不丢失 */
-  .rbturn{display:grid;grid-template-columns:22px 1fr;column-gap:10px;align-items:center;height:auto;min-height:38px;margin:0;position:relative}
+  /* 手机：2 列蛇形往返（节点—段—节点 一行 + 回转段独占一行），替代单列时间轴，高度约降一半 */
+  .rb,.rb.rev{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);column-gap:8px;row-gap:2px;align-items:center;padding:0}
+  /* 上行 DOM: N1 S1 N2 S2 N3 S3 N4 → 行1=N1 S1 N2 / 行2=回转S2(右列) / 行3=N4 S3 N3 */
+  .rb>:nth-child(1){grid-area:1/1}.rb>:nth-child(2){grid-area:1/2}.rb>:nth-child(3){grid-area:1/3}
+  .rb>:nth-child(4){grid-area:2/3}.rb>:nth-child(5){grid-area:3/3}.rb>:nth-child(6){grid-area:3/2}.rb>:nth-child(7){grid-area:3/1}
+  /* 下行 DOM 逆序: N8 S6 N7 S5 N6 S4 N5 → 行1=N5 S4 N6 / 行2=回转S5(右列) / 行3=N8 S6 N7 */
+  .rb.rev>:nth-child(7){grid-area:1/1}.rb.rev>:nth-child(6){grid-area:1/2}.rb.rev>:nth-child(5){grid-area:1/3}
+  .rb.rev>:nth-child(4){grid-area:2/3}.rb.rev>:nth-child(3){grid-area:3/3}.rb.rev>:nth-child(2){grid-area:3/2}.rb.rev>:nth-child(1){grid-area:3/1}
+  /* 节点：圆点 + 名称/日期，左对齐紧凑 */
+  .rbnode{display:grid;grid-template-columns:13px minmax(0,1fr);column-gap:7px;text-align:left;padding:2px 0;min-width:0}
+  .rbnode i{grid-column:1;grid-row:1;margin:4px 0 0;width:12px;height:12px;border-width:3px}
+  .rbnode b{grid-column:2;grid-row:1;font-size:12.5px;line-height:1.3;min-width:0}
+  .rbnode span{grid-column:2;grid-row:2;font-size:10.5px;line-height:1.3;min-width:0}
+  /* 水平段：里程 + 线段 */
+  .rbseg{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0;min-width:0}
+  .rbseg em{font-size:10px;margin:0 0 3px;white-space:nowrap}
+  .rbseg u{display:block;width:100%;min-width:34px;height:2px}
+  /* 行2 段向右→左，箭头反向；行1 段左→右，覆盖 .rb.rev 的全局反向 */
+  .rb>:nth-child(6) u::after,.rb.rev>:nth-child(2) u::after{right:auto;left:-1px;border-left-color:transparent;border-right-color:#c9b98d}
+  .rb.rev>:nth-child(6) u::after{right:-1px;left:auto;border-left-color:#c9b98d;border-right-color:transparent}
+  /* 回转段：竖线 + 里程，位于行走方向的末列 */
+  .rb>:nth-child(4),.rb.rev>:nth-child(4){flex-direction:row;align-items:center;justify-content:flex-start;gap:6px;padding:1px 0}
+  .rb>:nth-child(4) u,.rb.rev>:nth-child(4) u{order:-1;width:2px;min-width:2px;height:24px}
+  .rb>:nth-child(4) u::after,.rb.rev>:nth-child(4) u::after{display:none}
+  .rb>:nth-child(4) em,.rb.rev>:nth-child(4) em{margin:0}
+  /* 中间回转（D4）：左列竖线 + 里程 */
+  .rbturn{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);column-gap:8px;height:auto;min-height:0;margin:2px 0;align-items:center}
   .rbturn .tspacer,.rbturn .tcurve{display:none}
-  .rbturn::before{content:'';grid-column:1;grid-row:1;justify-self:center;width:2px;height:100%;background:#c9b98d}
-  .rbturn .tmob{display:block;grid-column:2;margin:0;white-space:normal;font-family:var(--serif);font-size:12.5px;color:#9a6a1f}
+  .rbturn .tmob{display:flex;grid-column:1;grid-row:1;align-items:center;gap:6px;margin:0;font-size:10px;font-family:var(--serif);color:#9a6a1f;min-width:0}
+  .rbturn .tmob::before{content:'';width:2px;height:24px;background:#c9b98d;flex:none}
+  .rbturn .tmob b{font-weight:400;white-space:nowrap}
+  .rbturn .tmob i{display:none}
 }
 
 /* ===== 概览统计 ===== */
@@ -129,6 +145,34 @@ h2::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,#d9cba6,
 .cval{width:236px;flex:none;font-size:12.5px;color:var(--ink3)}
 .crow:hover .clabel{color:var(--ink)}
 @media(max-width:640px){.cval{display:none}}
+
+/* ===== 逐日一览表 · 窄屏自适应（取消横向滚动，改信息卡堆叠） =====
+   用 flex + 换行实现：空间不足时整块「车时」下移，而不是把里程拆开。 */
+@media(max-width:720px){
+  #ovtbl{min-width:0}
+  #ovtbl thead{display:none}
+  #ovtbl tbody tr{display:flex;flex-wrap:wrap;align-items:baseline;
+    column-gap:8px;row-gap:2px;padding:11px 2px}
+  #ovtbl tbody td{border:0;padding:0;white-space:normal;background:transparent}
+  #ovtbl tbody td:nth-child(1){order:1;flex:0 0 auto;font-weight:600;color:#1f2a18}
+  #ovtbl tbody td:nth-child(2){order:2;flex:0 0 auto;margin-right:auto;
+    font-size:12.5px;color:var(--ink3)}
+  #ovtbl tbody td:nth-child(3){order:5;flex:0 0 100%;font-size:13.5px;line-height:1.55}
+  #ovtbl tbody td:nth-child(4){order:3;flex:0 0 auto;font-family:var(--serif);
+    font-weight:600;color:#8a4a1d;font-size:13px}
+  #ovtbl tbody td:nth-child(5){order:4;flex:0 0 auto;font-size:12.5px;color:var(--ink3)}
+  #ovtbl tbody td:nth-child(6){order:6;flex:0 0 100%;font-size:12.5px;color:var(--ink3)}
+  #ovtbl tbody td:nth-child(6)::before{content:'住 · ';color:#b0a98e}
+  #ovtbl tbody tr:hover{background:#faf5e6}
+  #ovtbl tbody tr:hover td{background:transparent}
+  #ovtbl tfoot tr{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:10px;
+    padding:10px 2px;background:#f4eeda}
+  #ovtbl tfoot td{border:0;padding:0;background:transparent;white-space:normal}
+  #ovtbl tfoot td:nth-child(1){flex:1 1 auto;font-family:var(--serif)}
+  #ovtbl tfoot td:nth-child(2){flex:0 0 auto}
+  #ovtbl tfoot td:nth-child(3){flex:0 0 auto}
+  #ovtbl tfoot td:nth-child(4){display:none}
+}
 
 /* ===== 地图 ===== */
 .mapgrid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,3fr);gap:22px;align-items:start;margin-top:6px}
@@ -232,7 +276,7 @@ svg text{font-family:var(--sans)}
 .chan td{padding:5px 8px;border-top:1px solid #efe7d0;color:#4a4636;line-height:1.6}
 .chan td:first-child{font-weight:600;color:#7a4a12}
 .chan td.cref{color:#9a9378;white-space:nowrap}
-.chan td.cy{color:#a8442f;font-weight:700;white-space:nowrap;font-family:var(--serif);font-size:13px}
+.chan td.cy{color:#a8442f;font-weight:700;white-space:normal;font-family:var(--serif);font-size:13px}
 .chan .cnote{margin:7px 0 0;font-size:11.5px;color:var(--ink3);line-height:1.6}
 .routes{display:grid;gap:9px;margin-top:10px}
 .routes>*{min-width:0}
@@ -375,6 +419,7 @@ ol.tips{list-style:none;padding:0;margin:0;counter-reset:tip}
       <li>海拉尔古城优先<b>傍晚</b>去，白天观赏性一般，18 点后灯笼亮起夜景氛围感更强。</li>
       <li>阿尔山市区的闲逛点全部<b>免门票</b>，适合跑完大景区之后放松。</li>
       <li>全程边境、林区信号不稳，务必<b>提前下载内蒙古离线地图</b>；油表过半就加满油。</li>
+      <li>每次开车出发前，养成<b>绕车一圈</b>的习惯：重点看轮胎下方和车周有没有钉子、螺丝等尖锐物（顺带瞄一眼胎压与车底）。林区、砂石路段扎胎是最现实的抛锚风险，早发现早处理。</li>
     </ol>
   </section>
 
@@ -414,7 +459,7 @@ var DAYS=[
   route:['哈尔滨','绥满高速','加格达奇'],road:'高速 + 国道',
   schedule:[['06:30','哈尔滨出发，早餐自备，中途服务区休整'],
             ['12:00','途中简单午餐'],
-            ['14:30–15:00','抵达加格达奇，办理入住休整']],
+            ['15:30–16:00','抵达加格达奇，办理入住休整']],
   strolls:[{tag:'可选',name:'北山公园',desc:'离市区很近，开车几分钟；步道平缓，登高俯瞰加格达奇与大兴安岭林海，傍晚看城市日落。1–1.5 小时，免费。'},
            {tag:'可选',name:'世纪大道 · 本地超市',desc:'市区简单散步，逛本地超市，采购零食、饮用水、暖宝宝。'}],
   meal:'本地东北菜、林区山野菜',
@@ -424,10 +469,15 @@ var DAYS=[
  {n:2,date:'9月26日',color:'#5f7f3e',title:'加格达奇 → 根河 → 莫尔道嘎 → 室韦',
   stayPill:'住·额尔古纳室韦风景酒店',stayShort:'室韦',
   hotel:'额尔古纳室韦风景酒店',hotelNote:'室韦苏木 · 木刻楞风格，入住前确认供暖',
-  route:['加格达奇','根河','莫尔道嘎','太平林场','老鹰嘴','临江','界河观景点','室韦'],road:'G332 国道 · 林区盘山路多、限速多 · 坚决不开夜路',
-  schedule:[['06:30','加格达奇出发，先把油加满，早餐自备'],
-            ['10:10','抵达根河：冷极广场、冷极温度计打卡（路边即停，20–30 分钟）'],
-            ['10:45','敖鲁古雅使鹿部落景区：不买观光车，步行约 300–400m 即到原始部落；按演出时间表卡场次，预留 1.5–2h'],
+  route:['加格达奇','根河','莫尔道嘎','太平林场','老鹰嘴','临江','界河观景点','室韦'],road:'G332 国道 · 林区盘山路多、限速多 · 为赶 09:10 演出 04:50 早发，前段约 50 分钟天未亮需慢行，其余时段坚决不开夜路',
+  schedule:[['04:50','加格达奇出发（前一晚已加满油；天未亮，前段约 50 分钟林区夜路，务必慢行；早餐自备）'],
+            ['08:30','抵达根河市区——不进市区停留，直接穿过市区前往敖鲁古雅（冷极广场挪到中午出园后打卡）'],
+            ['08:40','敖鲁古雅使鹿部落景区入园：不买观光车，步行约 300–400m 即到原始部落'],
+            ['09:10','《萨满舞》祈福演艺（09:10–09:40 · 萨满演艺剧场 · 原始部落内）——今天特意早起早发，就为赶上这一场'],
+            ['10:00','两场演出之间：逛原始部落鹿苑、喂驯鹿（勿摸角）、鄂温克民居，随走随拍'],
+            ['11:15','《敖鲁古雅风情》沉浸式演艺（11:15–11:47 · 沉浸式演艺剧场 · 鹿苑旁）'],
+            ['12:15','出园，返回根河市区'],
+            ['12:25','根河 · 冷极广场 / 冷极温度计打卡（路边即停，20 分钟）'],
             ['12:45','根河市区午餐'],
             ['13:30','前往莫尔道嘎（G332 林区盘山路，限速多）'],
             ['15:50','莫尔道嘎国家森林公园：本段仅约 1h40m——只够坐一趟小火车看森林（纯车程 1.5h、基本不下车），或门口打卡'],
@@ -435,11 +485,12 @@ var DAYS=[
             ['18:50','抵达室韦苏木，办理入住（额尔古纳室韦风景酒店）']],
   spots:[{tag:'路过打卡',name:'根河 · 冷极广场 / 冷极温度计',
           facts:['根河号称“中国冷极”，广场与温度计标志是标准打卡位，免费',
-                 '路边停车即拍，20–30 分钟足够，不必专门排队']},
+                 '路边停车即拍，20–30 分钟足够，不必专门排队',
+                 '本行程安排在 12:25–12:45（出园返市区后、午餐前）打卡：早上不进市区停留，直接去敖鲁古雅赶 09:10 场《萨满舞》']},
          {tag:'必去',name:'敖鲁古雅使鹿部落景区',
           facts:['不用买观光车票：从入口步行约 300–400m 即到原始部落',
                  '驯鹿不能摸它的角——会痒（只看不摸，尊重动物）',
-                 '演出场次多，进园先看时间表再定动线；按本行程 10:45 入园，可赶上 11:15 场《敖鲁古雅风情》'],
+                 '演出场次多，进园先看时间表再定动线；本行程 08:40 入园，09:10《萨满舞》与 11:15《敖鲁古雅风情》两场都能看到'],
           perf:{title:'演出时间表（现场公示）',
                 note:'演出受天气影响可能临时取消或调整，请以现场公告为准；后期场次可能根据季节及客流增减，恕不另行通知。',
                 rows:[['《萨满舞》祈福演艺','09:10–09:40、15:00–15:28','28 分钟','萨满演艺剧场（原始部落内）'],
@@ -486,19 +537,23 @@ var DAYS=[
   meal:'俄式餐、列巴、红菜汤、炖菜',
   eats:['牧民的日常蒙古茶餐厅','鸿英烧烤','隔壁老王地方菜烧烤','原味乡'],
   lodging:'<b class="hn">额尔古纳室韦风景酒店</b><span class="hnsub">室韦苏木 · 木刻楞风格，入住前与店家确认供暖</span>',
-  notes:['⏱ 当天约 443km / 纯驾驶约 7h21m，叠加两个景区后总时长很紧：按 06:30 出发估算，到室韦约 18:50，末段接近天黑，务必早发',
+  notes:['⏱ 为赶上 09:10 场《萨满舞》，今天 04:50 就从加格达奇出发；当天约 443km / 纯驾驶约 7h21m，叠加两个景区后总时长很紧，到室韦约 18:50，末段接近天黑',
+         '🌙 04:50 出发＝前一晚务必早睡。04:50–05:40 约 50 分钟天未亮（当地日出约 05:40），前段为 G332 林区盘山路，须慢行、开雾灯、绝不疲劳驾驶。冷极广场打卡已挪到中午出园后（12:25），就为把早发时间压到最晚',
          '⚠️ 莫尔道嘎当天只留了 15:50–17:30（约 1h40m）：小火车逐站下车约 3h、自驾主线建议 4–5h，都放不下——当天只够坐一趟小火车看森林（基本不下车）或门口打卡；想深度玩须舍弃莫尔道嘎、或改住一晚',
          '⚠️ 室韦住宿条件有限，已订风景酒店；入住前确认供暖',
-         '坚决不开夜路']},
+         '除 04:50 早发的这 50 分钟外，今天坚决不开夜路']},
  {n:3,date:'9月27日',color:'#94842f',title:'室韦 → 卡线 X904 → 黑山头 → 额尔古纳',
   stayPill:'住·如家华驿精选酒店',stayShort:'额尔古纳',
   hotel:'额尔古纳 · 如家华驿精选酒店',hotelNote:'拉布大林市区 · 市政府周边',
   route:['室韦','九卡–八卡–七卡–五卡（卡线 X904）','黑山头','额尔古纳（拉布大林）'],
-  road:'卡线 X904（904 县道）约 160km · 边走边玩 3.5–4.5h；黑山头 → 额尔古纳约 70km · 1h',
+  road:'卡线 X904（904 县道）约 160km · 边走边玩 3.5–4.5h；黑山头 → 额尔古纳约 70km · 1h（看日落则末段为夜路）',
   schedule:[['07:30','室韦出发上卡线，沿途界河、河谷、白桦林；9 卡、7 卡观景台停车拍照'],
-            ['11:30','抵达黑山头镇，简单午餐；可登黑山头日落山（今天不看日落，路过打卡即可）'],
-            ['13:00','离开黑山头，前往额尔古纳市区'],
-            ['14:00','抵达额尔古纳市区，入住如家华驿精选酒店，短暂休整']],
+            ['11:30','抵达黑山头镇，镇上简单午餐（蒙妞鲜奶 / 一品香家常菜）'],
+            ['13:00','访牧户：导航搜「晓东东家庭游」，往里走即「额尔古纳市黑山头新镇观光牧场」；下午就近活动，玩到日落前'],
+            ['17:00','前往日落点：定位「日落免费最美点」，车停黑山头清逸民宿，步行约 700m'],
+            ['17:50','黑山头看日落（9 月底约 17:55 落山，约 18:20 收完霞光）'],
+            ['18:25','日落散场，赴额尔古纳市区（约 70km · 1h，末段天已黑）'],
+            ['19:25','抵达额尔古纳市区，入住如家华驿精选酒店']],
   spots:[{tag:'必读',name:'卡线 X904 · 边境公路玩法与通行提醒',
         facts:['卡线就是 X904（904 县道）——沿额尔古纳河（中俄界河）的边境公路，今天最精华的一段',
                '路上有多个观景台（九卡、八卡、七卡、五卡），可随停随拍',
@@ -511,13 +566,23 @@ var DAYS=[
                         '七卡附近有加油站；全程正常驾驶油耗足够，无需专程找油站']},
                 {label:'封路绕行 ·「室韦 → 九卡」封闭时改走',
                  stations:['室韦','恩和','七卡','五卡','黑山头'],
-                 facts:['室韦 → 恩和 → 七卡 约 114km；之后从七卡接回卡线，继续原路线往黑山头 / 额尔古纳']}]}],
+                 facts:['室韦 → 恩和 → 七卡 约 114km；之后从七卡接回卡线，继续原路线往黑山头 / 额尔古纳']}]},
+        {tag:'必体验',name:'黑山头日落 · 日落免费最美点',
+         facts:['🧭 导航直接定位「日落免费最美点」——黑山头最出名的日落观赏地，免费开放',
+                '🚗 车停「黑山头清逸民宿」，从停车处步行约 700m 到日落点',
+                '⏰ 9 月底约 17:55 落山，建议 17:00 前后到停车点；草原日落，天地一线']},
+        {tag:'必体验',name:'黑山头访牧户 · 额尔古纳市黑山头新镇观光牧场',
+         facts:['牧场全称「额尔古纳市黑山头新镇观光牧场」',
+                '🧭 导航方式：目的地搜「晓东东家庭游」，往里走即可到达观光牧场']}],
   strolls:[{tag:'可选',name:'哈萨尔广场',desc:'市区中心，散步看小城街景。'},
            {tag:'可选',name:'市区商业街',desc:'采购牛肉干、奶皮子等特产。'},
            {tag:'可选',name:'根河岸边步道',desc:'体力尚可的话短途开车过去，河边散步看秋景。'}],
-  meal:'本地蒙餐：手把肉、锅茶',
+  meal:'午餐黑山头镇，晚餐额尔古纳市区本地蒙餐：手把肉、锅茶',
+  eats:['蒙妞鲜奶','一品香家常菜'],
+  eatsLabel:'黑山头镇午餐',
   lodging:'<b class="hn">额尔古纳 · 如家华驿精选酒店</b><span class="hnsub">拉布大林市区 · 市政府周边，供暖完善</span>',
-  notes:['⚠️ 若「室韦 → 九卡」段封路：改走绕行线 室韦 → 恩和 → 七卡（约 114km），从七卡接回卡线继续往黑山头 / 额尔古纳；九卡、八卡两个观景台需跳过',
+  notes:['🌙 看完日落再走＝今晚要开约 1h 夜路：日落约 17:55 落山、18:20 前后收完霞光，黑山头 → 额尔古纳 70km（约 1h）末段天全黑，请慢行、注意牲畜横穿',
+         '⚠️ 若「室韦 → 九卡」段封路：改走绕行线 室韦 → 恩和 → 七卡（约 114km），从七卡接回卡线继续往黑山头 / 额尔古纳；九卡、八卡两个观景台需跳过',
          '🚫 卡线（X904 / 904 县道）全程禁飞无人机：属边境管理区，严禁起飞航拍',
          '✅ 卡线沿途几乎没有餐馆，自带零食和饮用水',
          '哈乌尔河景区距离市区较远，时间不够直接放弃']},
@@ -527,12 +592,53 @@ var DAYS=[
   route:['额尔古纳市区','额尔古纳国家湿地公园','莫日格勒河','海拉尔'],road:'全程约 3h · 节奏轻松',
   schedule:[['08:00','出发前往额尔古纳国家湿地公园，游玩 2–2.5h，登高看根河湿地全景'],
             ['11:00','返回市区附近午餐'],
-            ['12:30','莫日格勒河（天下第一曲水），制高点观景台看九曲河道；不要私自下草原，尊重草场权属。游玩 1.5–2h'],
-            ['15:30','出发前往海拉尔'],
+            ['12:30','抵莫日格勒河景区北门：车停北游客中心，乘景交车往第三观景台（北门 → 3 号台仅十几分钟，比南门 45 分钟近得多）'],
+            ['12:50','第三观景台看「天下第一曲水」全景——⭐ 精华所在；上下车加拍照预留约 1 小时'],
+            ['14:00','返回北游客中心取车，走北线往南出，沿途草原风光边走边停，前往海拉尔'],
             ['17:00','抵达海拉尔，办理入住']],
+  spots:[{tag:'免费',name:'额尔古纳市区免费湿地 · 客运总站旁',
+          facts:['🧭 导航到「额尔古纳客运总站」，路走到尽头往左边走，约十几分钟到湿地河边',
+                 '🅿️ 路边停着蛮多车，挺明显——看到一片车就差不多到了',
+                 '🚶 近期不给上山拍全景了，只能在湿地河边走走；河边也很美，晒太阳很舒服']},
+         {tag:'必读',name:'莫日格勒河（天下第一曲水）· 北线 vs 南线怎么选',
+          facts:['✅ 我们的走法（从额尔古纳方向来）：北游客中心停车 → 乘景交车到第三观景台 → 返回北游客中心取车 → 走北线往南出，前往海拉尔；北门离我们最近，是全程最省时间的一版',
+                 '⭐ 第三观景台是重点：看「天下第一曲水」全景的最佳位置，别只在路边打个卡就走',
+                 '🚌 北门 → 第三观景台很近，车程十几分钟；南门 → 第三观景台远，约 45 分钟',
+                 '⏱ 上下车加拍照预留约 1 小时（带父母边走边休息；年轻人更快，看你在观景台待多久）',
+                 '🎫 已确认：莫日格勒河在内蒙古一卡通覆盖列表内——南线观光车 35 元/人 / 自驾 100 元/车 持卡免（我们走的免费北线不受影响，改走南线等于全免）'],
+          routes:[{label:'① 时间少 · 1–2 小时｜北门 + 第三观景台',
+                   stations:['北门','第三观景台','北门'],
+                   facts:['适合：时间紧、只想快速看一眼「天下第一曲水」',
+                          '北门停车 → 乘景区观光车到第三观景台 → 原路返回取车，最省时间']},
+                  {label:'② 时间充裕 · 至少 3 小时｜南进南出',
+                   stations:['南门','第一观景台','第二观景台','第三观景台','南门'],
+                   facts:['适合：想完整走完景区、把各观景台都看到']},
+                  {label:'③ 自驾深度 · 南北环线',
+                   stations:['南门','第三观景台','北门','曲水云天','图嘎营地','北线方向','额尔古纳'],
+                   facts:['适合：时间特别充裕、喜欢边走边玩；把南线、北线与沿途草原景观串起来']}],
+          opts:{caption:'北线 vs 南线，怎么选',
+                items:[{tag:'北线',name:'免费 · 小众原生态',price:'免费',
+                        bullets:['人少、原生态，适合自驾与摄影',
+                                 '⚠️ 沿途几乎没有商店、卫生间，物资与油量提前备好']},
+                       {tag:'南线',name:'景区成熟 · 有观光车',price:'收费（18 点后免费）',
+                        bullets:['官方收费：观光车 35 元/人；自驾入园（南线）100 元/车',
+                                 '观光车往返各观景台，老人小孩友好',
+                                 '⚠️ 收费、游客多，旺季要给排队与等车留时间']}],
+                chan:{title:'🚌 景区观光车 · 时刻表（车票当日有效，凭票乘车）',
+                      head:['运行方向','首班','末班'],
+                      rows:[['南游客中心 → 北游客中心','08:10','17:10'],
+                            ['北游客中心 → 南游客中心','09:20','18:10']],
+                      note:'运营时段 08:00–17:00，每 10 分钟循环发车。需保留车票、凭票乘车，车票当日有效；景区景交车为封闭式大巴，宠物不得上车。持票在莫尔根驿站、阿吉奈驿站、浩林温都日驿站只能各进入一次，不能多次出入。'},
+                tips:['从额尔古纳方向过来走北门最近——北门进、观光车上下、原路返回取车，是时间最省的一版',
+                      '南线完整走完（南门 → 一、二、三观景台 → 南门）建议至少预留 3 小时，别按北门方案的时间去估',
+                      '北线免费且人少，但沿途几乎没有商店与卫生间，备好水与补给再上；不要私自下草原，尊重草场权属']}}],
   strolls:[{tag:'强烈推荐',name:'呼伦贝尔古城（海拉尔古城）',desc:'免费；傍晚 18 点后灯笼亮起氛围最好。北城门打卡、步行街逛文创小吃，1–2 小时，不进收费展馆也很好看。'},
            {tag:'备选',name:'成吉思汗广场',desc:'城市大广场，散步；离古城不远，可与古城串联一起逛。'}],
   meal:'地道蒙餐：烤羊腿、奶茶',
+  eats:['铁山冷饮','福记列巴','顺成红焖羊肉'],
+  eatsLabel:'额尔古纳市区 · 午餐',
+  eats2:['老杨扒拉锅','小牧童火锅居','老三骨头馆','咘哩呀的布里亚特包子'],
+  eatsLabel2:'海拉尔 · 晚餐 / 次日早餐',
   lodging:'<b class="hn">汉庭呼伦贝尔市政府万达广场酒店</b><span class="hnsub">海拉尔市区 · 万达广场一带，逛街吃饭便利</span>',
   notes:['莫日格勒河周边加油站少，出发前把油加满']},
  {n:5,date:'9月29日',color:'#c0722a',title:'海拉尔 → 阿尔山',
@@ -547,32 +653,79 @@ var DAYS=[
            {tag:'可选',name:'温泉街彩色木屋街区',desc:'漫步小城街道，马卡龙色小房子、俄式小店，人少很治愈。'},
            {tag:'可选',name:'哈拉哈河滨河步道',desc:'沿河边木栈道散步，看小城河景。'}],
   meal:'阿尔山本地铁锅炖、山野菜',
+  eats:['林苑砂锅炖','塞恩羊汤馆','保力格冰煮羊'],
   lodging:'<b class="hn">阿尔山艾诺尔宾馆</b><span class="hnsub">温泉街一带 · 连住 9.29–9.30 两晚，性价比高于景区</span>',
-  notes:['阿尔山市区海拔高，9 月底夜间接近 0℃，注意保暖','温泉街周边闲逛点均免门票']},
+  notes:['阿尔山市区海拔高，9 月底夜间接近 0℃，注意保暖','温泉街周边闲逛点均免门票','森林公园安排：30 日全天玩付费 + 1 日上午玩免费；付费自驾票每日限 200 号，30 日宜早到']},
  {n:6,date:'9月30日',color:'#ae5430',title:'阿尔山国家森林公园 · 全天',
   stayPill:'住·阿尔山艾诺尔宾馆（连住）',stayShort:'阿尔山（连住）',
   hotel:'阿尔山艾诺尔宾馆',hotelNote:'连住第 2 晚 · 无需换房、无需搬行李',
   route:['阿尔山市区','森林公园（往返约 70km）','阿尔山市区'],road:'森林公园距市区约 70km · 车程约 1h',
-  schedule:[['07:30','阿尔山市区出发，前往阿尔山国家森林公园大门'],
-            ['08:30','入园换乘景区观光车，游玩核心点位：三潭峡、石塘林、阿尔山天池、杜鹃湖、不冻河'],
-            ['16:30','出景区，返回阿尔山市区']],
+  spots:[{tag:'必读',name:'阿尔山森林公园 · 线路与票务',
+    facts:['以天池景区为界：向西免费（蓝房子、不冻河、乌苏浪子湖、哈拉哈河等），向东收费（大峡谷、驼峰岭天池、杜鹃湖、石塘林、三潭峡等）',
+           '门票 180 元/人 · 有效期 2 天（正好覆盖 30 日全天 + 1 日上午）；观光车 105 元/人，只在付费景区间运行',
+           '自驾付费景点（即「任你游」）：300 元/辆 · 仅 1 天有效 · 每日限 200 号——门票管 2 天，自驾票只管 1 天',
+           '体力参考：驼峰岭天池 516 级台阶登顶 · 三潭峡约 3km · 石塘林约 2.7km · 杜鹃湖到湖边约 800m',
+           '驼峰岭天池、三潭峡、石塘林出入口不在一起，自驾需原路返回原进口取车'],
+    routes:[{label:'免费西线（只能自驾 · 7:30–19:30 入园）',
+             stations:['西门','乌苏浪子湖','蓝房子','不冻河观景台','西门'],
+             facts:['小程序【阿尔山柴河旅游景区】预约「乌苏浪子湖过境线路」：每日仅 200 名额、当天约当天用、填车牌核验通行',
+                    '07:30 之前入园不需要预约（但走的人也不少）；免费通行超 1 小时收取 10 元/车',
+                    '到西门后沿大路一直直行、直接导航天池服务区，不要左拐——单行线在公交站里面，不让进只能出','另有仙鹤湖、鹿鸣湖、松叶湖等免费景点']},
+            {label:'付费东线 · 橘色路线',stations:['驼峰岭天池','大峡谷','杜鹃湖','石塘林']},
+            {label:'付费 · 绿色路线',stations:['三潭峡','地池','天池']}],
+    opts:{caption:'门票怎么买？一卡通 vs 自费',
+      items:[{tag:'方案A',name:'内蒙古一卡通',price:'209 元/人',
+              bullets:['云闪付领 7 折券后购买：含阿尔山门票 + 观光车（分买 180+105=285，省 76/人）','激活后自购买日起 365 个自然日内有效——提前买好即可，全程 9.25–10.2 都在有效期内','核销的阿尔山门票同样 2 天有效：30 日全天 + 1 日上午的安排与自费票完全一致，不受影响','另含敖鲁古雅使鹿部落——Day2（9.26）正好用上','另含白狼峰（价值 80）+ 白狼鹿园（价值 50）：都在 Day7 阿尔山→乌兰浩特的 S203 顺路上，基本不绕路','已确认莫日格勒河也在覆盖列表——南线观光车 35/人、自驾 100/车 持卡免','不含自驾 300 元/辆；若 30 日坐观光车游付费景点则全覆盖']},
+             {tag:'方案B',name:'窗口自费',price:'180+105=285 元/人',
+              bullets:['门票 180（2 天有效）+ 观光车 105，随买随用不折腾','若 30 日想自驾付费线：自费 660 vs 一卡通+自驾票 718.6，账面省 58——但一卡通另含敖鲁古雅（Day2 必去）+ 白狼 130/人，综合仍是一卡通划算']}],
+      chan:{title:'💰 花费对比（按 2 人 / 1 辆车估算）',
+        head:['方案','合计','说明'],
+        rows:[['一卡通 209×2','418 元','含门票+观光车；另得敖鲁古雅 + 白狼峰 80 + 白狼鹿园 50（顺路就回本）'],
+              ['自费：门票+观光车','570 元','(180+105)×2，比一卡通多 152'],
+              ['自费：门票+自驾票','660 元','180×2 + 300/辆（自驾票仅 1 天有效）'],
+              ['一卡通+自驾票','718 元','比纯自费多 58；白狼 2 人 260 + 敖鲁古雅（Day2 必去）已赚回，仍是一卡通优']],
+        note:'最终结论：推荐买一卡通。30 日坐观光车 → 省 152；30 日坚持自驾 → 两案差 58，但 Day7 顺路的白狼峰+鹿园 2 人 260、Day2 必去的敖鲁古雅都在卡内，早已赚回。4 人自驾时 300/辆摊到 75/人，比观光车 105/人还便宜。'},
+      tips:['我们的时间分配：30 日全天玩付费（可顺道看免费）、1 日上午玩免费——门票 2 天有效正好覆盖',
+            '观光车每 10 分钟循环、只在付费景区间摆渡，可省掉自驾原路返回找车的麻烦；1 天玩完 7 个付费点太辛苦，量力取舍',
+            '1 日上午走免费线：要么 07:30 前入园（免预约）、要么提前预约（每日 200 号），记得提前约']}},
+   {tag:'省钱',name:'内蒙古一卡通 · 209 购买教程',
+    facts:['原价 299 元/人，云闪付 7 折券后实付 209.3 元；7 折券单用户限抢 4 张，领取后 3 个自然日内有效（含获得当日）——看好购买时机再领，避免过期作废',
+           '支付成功后次日 0 点自动生效：最晚 9.25 当天付款，才能保证 9.26 在敖鲁古雅正常核销',
+           '7 折券还适用于本行程中的莫尔道嘎国家森林公园、额尔古纳国家湿地公园门票——这两处若单独买票，同样可走云闪付立减'],
+    routes:[{label:'7 折购买步骤',
+             stations:['云闪付领券','小程序下单','实名填人','改云闪付支付','实付 209.3'],
+             facts:['① 云闪付 APP：左上角定位切到「呼和浩特」（部分用户反馈这样更容易刷到券）→ 首页点「政府消费券」→「内蒙古文旅消费券」领取 7 折券',
+                    '② 微信搜索「i游内蒙古」或「云游内蒙古」官方小程序 → 首页点「一卡通」→「我要购买」',
+                    '③ 点「新增持卡人」，填使用人真实姓名 + 身份证号（必须实名认证）',
+                    '④ 提交订单进入微信支付页后先别付款：点「更改」付款方式 → 选「云闪付支付」',
+                    '⑤ 系统自动抵扣 7 折消费券，实付 209.3 元/人；支付成功次日 0 点自动生效']}]}],
+  schedule:[['07:30','出发前往森林公园（约 70km / 1h）；付费自驾票每日限 200 号，宜早到'],
+            ['08:30','自驾入园走付费东线：驼峰岭天池（516 级台阶）→ 大峡谷 → 杜鹃湖 → 石塘林；三潭峡、地池、天池视体力取舍'],
+            ['12:30','午餐：自备干粮（景区内餐食少）'],
+            ['16:30','出景区，返回阿尔山市区（若想顺道看免费线，需当日预约「乌苏浪子湖过境线路」名额）']],
   strolls:[{tag:'可选',name:'泡温泉',desc:'温泉街有很多温泉酒店，可选消费。'},
            {tag:'可选',name:'温泉街夜散步',desc:'不想泡温泉，就在温泉街夜晚散步，小城灯光安静舒服。'}],
   meal:'景区内用餐少，建议回市区解决',
+  eats:['林苑砂锅炖','塞恩羊汤馆','保力格冰煮羊'],
+  eatsLabel:'回市区晚餐可选',
   lodging:'<b class="hn">阿尔山艾诺尔宾馆</b><span class="hnsub">连住第 2 晚 · 无需换房、无需搬行李</span>',
-  notes:['门票 2 天有效，必须坐景区区间车，建议早进园','景区内吃饭选择少，自带干粮、热水','园内气温比市区更低，务必厚外套']},
+  notes:['门票 2 天有效、自驾票仅 1 天有效；我们 30 日玩付费、1 日上午玩免费，正好覆盖','景区内吃饭选择少，自带干粮、热水','园内气温比市区更低，务必厚外套']},
  {n:7,date:'10月1日',color:'#94463a',title:'阿尔山 → 乌兰浩特',
   stayPill:'住·如家精选酒店（合展中学店）',stayShort:'乌兰浩特',
   hotel:'如家精选酒店（乌兰浩特合展中学店）',hotelNote:'乌兰浩特市区',
-  route:['阿尔山','乌兰浩特'],road:'国道，路况良好',
-  schedule:[['09:00','阿尔山市区出发，沿途山林草原风光'],
-            ['12:30','抵达乌兰浩特，午餐，办理入住']],
+  route:['阿尔山','白狼镇（顺道）','乌兰浩特'],road:'S203 国道 · 途经白狼镇（距市区约 36km，基本不绕路）',
+  schedule:[['07:20','二进森林公园走免费西线：07:30 前入园免预约（否则需提前约「乌苏浪子湖过境线路」，每日 200 号）'],
+            ['07:30–11:00','免费景点随走随停：乌苏浪子湖 → 蓝房子 → 不冻河观景台 → 哈拉哈河'],
+            ['11:30','出园返回阿尔山市区午餐'],
+            ['12:30','出发赴乌兰浩特（约 270km / 3.5–4h），沿 S203 出城约 40min 即到白狼镇'],
+            ['13:15','顺道白狼镇（一卡通已含，0 元刷）：白狼峰海拔 1511m、车可开近峰顶，登顶往返约 1–1.5h；白狼鹿园喂鹿约 40min。D2 已看过敖鲁古雅驯鹿，鹿园可取舍；只逛鹿园更省时'],
+            ['17:30–18:00','抵达乌兰浩特，办理入住（逛白狼峰按 18:00、只逛鹿园按 17:30）']],
   strolls:[{tag:'方案A · 人文',name:'成吉思汗庙',desc:'建在北山，登高俯瞰乌兰浩特全城，了解蒙元历史，1.5 小时。'},
            {tag:'方案B · 休闲',name:'兴安盟博物馆',desc:'了解科尔沁历史，免费。'},
            {tag:'夜晚',name:'五一广场 / 铁西夜市',desc:'逛本地夜市，吃小吃、蒙古馅饼、羊肉串，感受小城烟火气。'}],
   meal:'蒙餐、牛肉火锅',
   lodging:'<b class="hn">如家精选酒店（乌兰浩特合展中学店）</b><span class="hnsub">乌兰浩特市区</span>',
-  notes:['方案 A / B 按兴趣与体力二选一即可']},
+  notes:['顺道白狼镇后 17:30–18:00 才抵达乌兰浩特，方案 A / B 与夜市时间偏紧，按体力取舍','白狼峰 / 鹿园都在 S203 主路旁，基本不绕路；一卡通已含，等于白拿 130/人','上午进园往返约 140km 未计入当日约 270km 里程']},
  {n:8,date:'10月2日',color:'#46647a',title:'乌兰浩特 → 哈尔滨',
   stayPill:'当晚到家',stayShort:'—（返哈）',
   route:['乌兰浩特','哈尔滨'],road:'全程高速',
@@ -587,7 +740,7 @@ var DAYS=[
 /* 逐日里程的唯一数字源：km=里程 / drive=车程文案 / h=纯车程小时（区间取中值）
    / note=里程条图补充说明 / kmSuffix=里程后缀（如「（往返）」）。改里程只需改这里。 */
 var CHART=[
- {n:1,km:580,drive:'6.5–7h',h:6.75,note:'高速+国道'},
+ {n:1,km:700,drive:'8–8.5h',h:8.25,note:'高速+国道'},
  {n:2,km:443,drive:'约 7h21m',h:7.35,note:'G332 林区山路'},
  {n:3,km:230,drive:'3.5–4.5h + 1h',h:5,note:'卡线160 + 70',noDrive:true},
  {n:4,km:180,drive:'约3h',h:3,note:'轻松日'},
@@ -629,9 +782,11 @@ var WARNS=[
 var CK=[
  {g:'证件卡照',items:['身份证（卡线检查站随时查验）','驾驶证、行驶证','车辆保险单 / 随车证件']},
  {g:'保暖衣物',items:['薄羽绒服','冲锋衣 + 抓绒','保暖内衣、厚袜子','帽子、手套、围巾','暖宝宝']},
- {g:'车辆装备',items:['灭火器（进山必备）','备胎 / 补胎工具','出发前保养与胎压检查']},
+ {g:'洗漱包',items:['牙刷','水乳','卸妆油','冲牙器']},
+ {g:'日用品',items:['洗发水','护发素','沐浴露','洗脸巾','一次性浴巾','内裤','袜子']},
+ {g:'车辆装备',items:['灭火器（进山必备）','备胎 / 补胎工具','胎压打气筒','出发前保养与胎压检查','去虫胶喷雾（清车头 / 挡风玻璃虫胶）']},
  {g:'电子导航',items:['内蒙古离线地图（提前下载）','车充、充电宝','行车记录仪']},
- {g:'饮食药品',items:['保温杯','高热量零食','常用药品、晕车药','墨镜（草原阳光强）']},
+ {g:'饮食药品',items:['保温杯','便携烧水壶（烧水配合保温杯）','高热量零食','常用药品、晕车药','酒精湿巾','墨镜（草原阳光强）','头孢','甲硝唑','乐松']},
  {g:'应急',items:['便携手电','玻璃水（防冻型）','汽车防虫网','口罩']},
  {g:'吃喝',items:['自热米饭','矿泉水']}
 ];
@@ -711,7 +866,7 @@ function go(id){var e=$(id);if(e){e.scrollIntoView({behavior:'smooth',block:'sta
    +       '<path d="M323,43 L337,43 L330,53 Z" fill="#c9b98d"/>'
    +     '</svg>'
    +   '</div>'
-   +   '<span class="tmob">回转下行 · '+kms[CUT-1]+' · 额尔古纳 → 海拉尔</span>'
+   +   '<span class="tmob"><b>回转 '+kms[CUT-1]+'</b><i>额尔古纳 → 海拉尔</i></span>'
    + '</div>';
 
   var h2='<div class="rb rev">';
@@ -809,7 +964,12 @@ function go(id){var e=$(id);if(e){e.scrollIntoView({behavior:'smooth',block:'sta
       return '<div class="stroll"><span class="tag '+tagCls(s.tag)+'">'+s.tag+'</span><b>'+s.name+'</b><p>'+s.desc+'</p></div>';
     }).join('');
     var notes=(d.notes||[]).map(function(n){return '<li>'+n+'</li>'}).join('');
-    var eats=(d.eats||[]).map(function(x){return '<span>'+x+'</span>'}).join('');
+    /* 餐饮药丸：支持两组（主组 d.eats + 可选第二组 d.eats2） */
+    function eatRow(lbl,arr){
+      if(!arr||!arr.length)return '';
+      return '<div class="eats"><em>'+lbl+'</em>'+arr.map(function(x){return '<span>'+x+'</span>'}).join('')+'</div>';
+    }
+    var eats=eatRow(d.eatsLabel||'本地小店',d.eats)+eatRow(d.eatsLabel2,d.eats2);
     /* 沿途重点：景区/打卡点，可带演出时间表（perf）与二选一票务（opts） */
     var spots=(d.spots||[]).map(function(s){
       var h='<div class="spot"><div class="sphead"><span class="tag '+tagCls(s.tag)+'">'+s.tag+'</span><b>'+s.name+'</b></div>';
@@ -862,7 +1022,7 @@ function go(id){var e=$(id);if(e){e.scrollIntoView({behavior:'smooth',block:'sta
       +(spots?'<div class="sub"><h5>🎫 沿途重点：门票 · 玩法 · 打卡</h5><div class="spots">'+spots+'</div></div>':'')
       +(st?'<div class="sub"><h5>🚶‍♂️ 住宿地附近闲逛（可选，累了就跳过）</h5><div class="strolls">'+st+'</div></div>':'')
       +'<div class="duo"><div><h5>🍽 餐饮</h5><p>'+d.meal+'</p>'
-      +(eats?'<div class="eats"><em>'+(d.eatsLabel||'本地小店')+'</em>'+eats+'</div>':'')
+      +eats
       +'</div><div><h5>🛏 住宿</h5><p>'+d.lodging+'</p></div></div>'
       +(notes?'<div class="notes"><ul>'+notes+'</ul></div>':'')
       +'</article>';
