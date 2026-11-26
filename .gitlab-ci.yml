@@ -1,11 +1,32 @@
+# GitLab Pages 部署：复用同一份 VitePress 构建过程。
+#
+# 与 GitHub Pages 相比有两处必须显式处理的差异，否则会「构建成功但站点不可用」：
+#
+#   1. 产物目录：GitLab Pages 只发布 artifacts 指定的目录，且约定入口为 public/；
+#      而 VitePress 默认输出到 .vitepress/dist（见 .vitepress/config.mts 的 outDir）。
+#      因此构建后把 dist 移动为 public/。
+#
+#   2. 站点 base：GitLab Pages 项目站点托管在 /<project>/ 子路径下，
+#      静态资源若用根路径会全部 404。这里设置 DEPLOY_PLATFORM=gitlab，
+#      由 .vitepress/config.mts 统一映射为 /li6daliy/。
+#
+# 注意：base 依赖于 GitLab Pages 的实际项目路径（namespace/project）。
+# 若项目改名或迁移到子组，需同步更新 .vitepress/config.mts 中的 BASE_BY_PLATFORM。
+
 image: node:22
+
 pages:
   cache:
     paths:
       - node_modules/
+  variables:
+    DEPLOY_PLATFORM: "gitlab"
   script:
     - npm install --frozen-lockfile
     - npm run docs:build
+    # GitLab Pages 的发布目录约定为 public/，把构建产物移动过去
+    - rm -rf public
+    - mv .vitepress/dist public
   artifacts:
     paths:
       - public

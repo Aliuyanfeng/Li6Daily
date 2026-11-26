@@ -5,7 +5,15 @@ import timeline from "vitepress-markdown-timeline";
 import process from "node:process";
 import { teekConfig } from "./teekConfig";
 
-const isProd = process.env.DEPLOY_PLATFORM === "github";
+// 部署平台决定站点 base：GitHub Pages 与 GitLab Pages 都托管在「用户/组织」根域下的
+// 项目子路径里，必须各自声明；未设置 DEPLOY_PLATFORM 时（本地 dev、Cloudflare Pages）
+// 直接使用根路径。
+const DEPLOY_PLATFORM = process.env.DEPLOY_PLATFORM;
+const BASE_BY_PLATFORM: Record<string, string> = {
+  github: "/Li6Daily/",
+  gitlab: "/li6daliy/",
+};
+const base = (DEPLOY_PLATFORM && BASE_BY_PLATFORM[DEPLOY_PLATFORM]) || "/";
 
 export default defineConfig({
   extends: teekConfig,
@@ -41,7 +49,7 @@ export default defineConfig({
       },
     ],
   ],
-  base: isProd ? "/Li6Daily/" : "/", // GitHub 用子目录，Cloudflare 用根路径
+  base,
   srcDir: "./src",
   outDir: ".vitepress/dist",
   cleanUrls: true,

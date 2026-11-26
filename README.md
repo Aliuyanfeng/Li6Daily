@@ -39,7 +39,7 @@ npm run docs:dev       # 启动本地开发服务器（--host，热更新）
 ```
 .
 ├── .github/workflows/deploy.yml   # GitHub Pages 部署工作流（push main 触发，最小 permissions 加固）
-├── .gitlab-ci.yml                 # GitLab Pages CI 配置（push main 触发，产物路径待修正）
+├── .gitlab-ci.yml                 # GitLab Pages CI 配置（push main 触发）
 ├── .prettierrc.json               # Prettier 配置
 ├── .prettierignore                # Prettier 忽略清单（产物 / 乱码文件 / 博客正文 / 成品 HTML）
 ├── eslint.config.mjs              # ESLint 9+ flat config（Vue + TypeScript）
@@ -98,7 +98,7 @@ npm run docs:dev       # 启动本地开发服务器（--host，热更新）
 | -------------------------------------- | --------------------------- | ----------------------------------------------------------------------------------------- |
 | 站点标题 / 描述 / 搜索 / Markdown 扩展 | `.vitepress/config.mts`     | `extends: teekConfig` 继承 Teek 配置；时间线插件、容器中文标签、代码行号                  |
 | 主题外观与行为                         | `.vitepress/teekConfig.ts`  | 博主信息、banner、文章列表、分页、百度统计、页脚、自动 frontmatter 与侧边栏插件           |
-| 部署 base                              | `.vitepress/config.mts`     | 条件值：`DEPLOY_PLATFORM === 'github'` 时为 `/Li6Daily/`，否则为 `/`（本地 / Cloudflare） |
+| 部署 base                              | `.vitepress/config.mts`     | 按 `DEPLOY_PLATFORM` 映射：`github` → `/Li6Daily/`，`gitlab` → `/li6daliy/`，未设置 → `/`（本地 / Cloudflare） |
 | 归档页热力图                           | `.vitepress/theme/index.ts` | 通过插槽 `teek-archives-top-before` 注入 `ContributeChart`                                |
 
 ## 部署与发布
@@ -108,7 +108,7 @@ npm run docs:dev       # 启动本地开发服务器（--host，热更新）
 | 平台             | 触发方式             | 说明                                                                                                                                          |
 | ---------------- | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | GitHub Pages     | push `main` 自动触发 | `.github/workflows/deploy.yml`：设置 `DEPLOY_PLATFORM=github` → `npm run docs:build` → 经 `peaceiris/actions-gh-pages` 发布 `.vitepress/dist` |
-| GitLab Pages     | push `main` 自动触发 | `.gitlab-ci.yml`：⚠ **产物路径不匹配**（artifacts 取 `public`，实际构建输出为 `.vitepress/dist`），启用前需修正                               |
+| GitLab Pages     | push `main` 自动触发 | `.gitlab-ci.yml`：设置 `DEPLOY_PLATFORM=gitlab`（base 为 `/li6daliy/`），构建后将 `.vitepress/dist` 移动为 `public/` 发布                               |
 | Cloudflare Pages | 按其接入配置         | 根路径 `base` 即可                                                                                                                            |
 
 **Actions 权限加固**：`deploy.yml` 顶层显式声明 `permissions: { contents: write }`——`GITHUB_TOKEN` 仅保留推送 `gh-pages` 分支所需的写权限，其余全部只读；无写权限的外部用户无法通过 push 触发本仓库工作流。

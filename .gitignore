@@ -4,4 +4,7 @@ CODEBUDDY.md
 .vitepress/cache/
 .vitepress/.temp/
 .vitepress/**/dist/
+# GitLab Pages 构建会把 .vitepress/dist 移动为根目录 public/；只忽略根目录，
+# 避免误伤站点资源目录 src/public/（前面加 / 表示锚定到仓库根）
+/public/
 .avlcode/
