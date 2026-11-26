@@ -21,7 +21,9 @@ export default defineConfig({
   title: "Li6Daily",
   description: "个人技术博客，记录学习和工作中的点滴。",
   head: [
-    ["link", { rel: "icon", href: "/favicon.png" }],
+    // 站内资源必须带上 base，否则子路径部署（GitHub/GitLab Pages）下会 404。
+    // 注意：本数组中其余条目均为外部 URL（字体、CDN），不能加 base。
+    ["link", { rel: "icon", href: `${base}favicon.png` }],
     ["link", { rel: "preconnect", href: "https://fonts.googleapis.com" }],
     ["link", { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "" }],
     [
