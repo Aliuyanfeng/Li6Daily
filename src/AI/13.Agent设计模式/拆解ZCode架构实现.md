@@ -1,5 +1,6 @@
 ---
-date: 2026-11-26 17:00:00
+date: 2026-10-27 10:00:00
+lastUpdated: 2026-10-30
 title: 拆解 ZCode：一个生产级 Coding Agent Harness 的架构实现
 permalink: /pages/zcode01
 categories:
@@ -438,4 +439,4 @@ ZCode 那句"无法关联 trace 的行为应避免引入"很硬。对个人项�
 > - 如果把 harness 当作一个长期运行的服务来设计，见 [用稳定的接口扩展托管智能体](./用稳定的接口扩展托管智能体.md)。
 > - 从零手写一个最小 agent 的六周路径，见 [从能调到能上线](../12.Agent工程化/Agent工程化六周实战.md)。
 >
-> **来源说明**：本文引用的架构约束与规范原文，均来自 `zai-org/ZCode` 仓库的 `apps/zcode-cli/AGENTS.md` 与 `apps/zcode-cli/docs/design/v2/tool/00-tool-change-chain.md`；`ToolMetadata`、`toContracts()` 的代码片段来自 `apps/zcode-cli/packages/core/src/tool/types.ts` 与 `registry.ts`。仓库版本以 ZCode v4.0.0（2026-11-23）为参照，实现可能随仓库演进而变化。
+> **来源说明**：本文引用的架构约束与规范原文，均来自 `zai-org/ZCode` 仓库的 `apps/zcode-cli/AGENTS.md` 与 `apps/zcode-cli/docs/design/v2/tool/00-tool-change-chain.md`；`ToolMetadata`、`toContracts()` 的代码片段来自 `apps/zcode-cli/packages/core/src/tool/types.ts` 与 `registry.ts`。仓库版本以 ZCode v4.0.0 为参照，实现可能随仓库演进而变化。

@@ -1,5 +1,6 @@
 ---
-date: 2026-11-26 14:00:00
+date: 2026-10-22 10:00:00
+lastUpdated: 2026-10-30
 title: 构建高效的 AI 智能体（Anthropic 官方文章翻译）
 permalink: /pages/bea001
 categories:

@@ -1,5 +1,6 @@
 ---
-date: 2026-11-26 10:00:00
+date: 2026-10-20 10:00:00
+lastUpdated: 2026-10-30
 title: 从能调到能上线——六周把大模型变成生产级 Agent
 permalink: /pages/agent6w
 categories:
