@@ -24,9 +24,9 @@ pages:
   script:
     - npm install --frozen-lockfile
     - npm run docs:build
-    # GitLab Pages 的发布目录约定为 public/，把构建产物移动过去
-    - rm -rf public
-    - mv .vitepress/dist public
+    # GitLab Pages 的发布目录约定为 public/，把构建产物移动过去。
+    # 用 Node 而非 rm/mv：shell 执行器若跑在 Windows 上，PowerShell 不支持 `rm -rf`。
+    - node -e "const fs=require('fs');fs.rmSync('public',{recursive:true,force:true});fs.renameSync('.vitepress/dist','public')"
   artifacts:
     paths:
       - public
