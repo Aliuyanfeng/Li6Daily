@@ -1,6 +1,5 @@
 ---
 date: 2026-10-30 10:00:00
-lastUpdated: 2026-10-30
 title: 拆解 DeepSeek Harness：把 Agent 拆成一棵可替换的插件树
 permalink: /pages/zcode02
 categories:

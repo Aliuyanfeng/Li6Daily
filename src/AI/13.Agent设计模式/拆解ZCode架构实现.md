@@ -1,6 +1,5 @@
 ---
 date: 2026-10-27 10:00:00
-lastUpdated: 2026-10-30
 title: 拆解 ZCode：一个生产级 Coding Agent Harness 的架构实现
 permalink: /pages/zcode01
 categories:
