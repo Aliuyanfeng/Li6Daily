@@ -1,6 +1,5 @@
 ---
 date: 2026-01-20 09:00:00
-lastUpdated: 2026-01-30
 title: RAG 完整链路与架构选型（系列导读）
 permalink: /pages/ragidx
 categories:
